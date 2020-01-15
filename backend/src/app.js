@@ -7,7 +7,6 @@ import morgan from 'morgan';
 import projectRoutes from './routes/projects';
 import taskRoutes from './routes/task';
 
-
 //Initialization
 const app = express();
 

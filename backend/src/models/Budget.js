@@ -1,15 +1,13 @@
 //para modelar datos 
 import Sequelize from 'sequelize';
-import Task from './Task';
 import Category from './Category';
-import Department from './Department';
-import Budget from './Budget';
-import Team from './Team';
+import Person from './Person';
+import Account from './Account';
 
 //import connection object
 import { sequelize } from '../database/database';
 
-const Project = sequelize.define('projects',{
+const Budget = sequelize.define('budgets',{
 
     id:{
         type: Sequelize.INTEGER,
@@ -17,7 +15,7 @@ const Project = sequelize.define('projects',{
         autoIncrement: true
     },
     code:{
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING, 
     },
     name:{
         type: Sequelize.STRING, 
@@ -26,62 +24,65 @@ const Project = sequelize.define('projects',{
     description:{
         type:Sequelize.TEXT
     },
-    priority:{
+    excercise:{
         type: Sequelize.STRING, 
-        allowNull: false,
     },
-    color:{
-        type: Sequelize.STRING, 
-        allowNull: false,
-        defaultValue: "red"
-    },
-    category_id:{
+    account_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: Category,
-          key: 'id',
-        }
-    },
-    department_id:{
-        type: Sequelize.INTEGER,
-        references: {
-          model: Department,
+          model: Account,
           key: 'id',
          }
     },
-    budget_id:{
+    person_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: Budget,
+          model: Person,
           key: 'id',
-        }
+         }
     },
-    team_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: Team,
-          key: 'id',
-        }
-    },
-    startdate:{
-        type:Sequelize.DATEONLY,
+    buddgetstart:{
+        type:Sequelize.DOUBLE,
         allowNull: false,
     },
-    enddate:{
-        type:Sequelize.DATEONLY,
+    buddgeupdate:{
+        type:Sequelize.DOUBLE,
         allowNull: false,
+    },
+    buddgetfinal:{
+        type:Sequelize.DOUBLE,
+        allowNull: false,
+    },
+    balance:{
+        type:Sequelize.DOUBLE,
+        allowNull: false,
+    },
+    returns:{
+        type:Sequelize.DOUBLE,
+    },
+    deviation:{
+        type:Sequelize.DOUBLE,
     },
     status:{
-        type: Sequelize.STRING, 
+        type:Sequelize.STRING,
         allowNull: false,
     },
-    location:{
-        type:Sequelize.TEXT
+    approval:{
+        type:Sequelize.BOOLEAN,
     },
-    
+    approvalby_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Person,
+          key: 'id',
+         }
+    },
+    dateapproval:{
+        type:Sequelize.DATEONLY,
+    },
     createdAt:{
         type:Sequelize.DATE,
         defaultValue: Sequelize.NOW,
@@ -95,8 +96,4 @@ const Project = sequelize.define('projects',{
 
 },{timestamps:true });
 
-
-Project.hasMany(Task, {foreignKey: 'id'})
-Task.belongsTo(Project, {foreignKey: 'project_id'})
-
-export default Project;
+export default Budget;

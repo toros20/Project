@@ -1,6 +1,12 @@
 //para modelar datos 
 import Sequelize from 'sequelize';
-
+import Category from './Category';
+import Project from './Project';
+import Account from './Account';
+import Dollar from './Dollar';
+import Team from './Team';
+import File from './File';
+import Person from './Person';
 //import connection object
 import { sequelize } from '../database/database';
 

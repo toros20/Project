@@ -12,6 +12,7 @@ export const sequelize = new Sequelize(
             min:0,
             require:30000,
             idle:10000
-        }
+        },
+        //logging:false // para ver las respuestas de la bd por consola
     }
-);
+);  

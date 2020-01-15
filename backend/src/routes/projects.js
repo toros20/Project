@@ -3,7 +3,7 @@ const router = Router();
 
 import {createProjects } from '../controllers/projectsController';
 // rutas /api/projets
-router.get('/', createProjects);
+router.post('/', createProjects);
 
 
 export default router;
