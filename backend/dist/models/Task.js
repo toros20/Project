@@ -7,6 +7,20 @@ exports["default"] = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
+var _Category = _interopRequireDefault(require("./Category"));
+
+var _Project = _interopRequireDefault(require("./Project"));
+
+var _Account = _interopRequireDefault(require("./Account"));
+
+var _Dollar = _interopRequireDefault(require("./Dollar"));
+
+var _Team = _interopRequireDefault(require("./Team"));
+
+var _File = _interopRequireDefault(require("./File"));
+
+var _Person = _interopRequireDefault(require("./Person"));
+
 var _database = require("../database/database");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -53,7 +67,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Category,
+      model: _Category["default"],
       key: 'id'
     }
   },
@@ -61,7 +75,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Project,
+      model: _Project["default"],
       key: 'id'
     }
   },
@@ -69,7 +83,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Account,
+      model: _Account["default"],
       key: 'id'
     }
   },
@@ -77,7 +91,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Dollar,
+      model: _Dollar["default"],
       key: 'id'
     }
   },
@@ -85,7 +99,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Team,
+      model: _Team["default"],
       key: 'id'
     }
   },
@@ -93,7 +107,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: File,
+      model: _File["default"],
       key: 'id'
     }
   },
@@ -101,7 +115,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Person,
+      model: _Person["default"],
       key: 'id'
     }
   },
@@ -109,7 +123,7 @@ var Task = _database.sequelize.define('tasks', {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: Person,
+      model: _Person["default"],
       key: 'id'
     }
   },

@@ -17,7 +17,7 @@ const Project = sequelize.define('projects',{
         autoIncrement: true
     },
     code:{
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
     },
     name:{
         type: Sequelize.STRING, 

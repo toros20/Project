@@ -7,15 +7,13 @@ exports["default"] = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
-var _Task = _interopRequireDefault(require("./Task"));
+var _Person = _interopRequireDefault(require("./Person"));
 
-var _Category = _interopRequireDefault(require("./Category"));
+var _Project = _interopRequireDefault(require("./Project"));
 
-var _Department = _interopRequireDefault(require("./Department"));
+var _Rol = _interopRequireDefault(require("./Rol"));
 
-var _Budget = _interopRequireDefault(require("./Budget"));
-
-var _Team = _interopRequireDefault(require("./Team"));
+var _File = _interopRequireDefault(require("./File"));
 
 var _database = require("../database/database");
 
@@ -23,14 +21,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //para modelar datos 
 //import connection object
-var Project = _database.sequelize.define('projects', {
+var Team = _database.sequelize.define('teams', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
     autoIncrement: true
-  },
-  code: {
-    type: _sequelize["default"].STRING
   },
   name: {
     type: _sequelize["default"].STRING,
@@ -39,60 +34,37 @@ var Project = _database.sequelize.define('projects', {
   description: {
     type: _sequelize["default"].TEXT
   },
-  priority: {
-    type: _sequelize["default"].STRING,
-    allowNull: false
-  },
-  color: {
-    type: _sequelize["default"].STRING,
-    allowNull: false,
-    defaultValue: "red"
-  },
-  category_id: {
+  person_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: _Category["default"],
+      model: _Person["default"],
       key: 'id'
     }
   },
-  department_id: {
-    type: _sequelize["default"].INTEGER,
-    references: {
-      model: _Department["default"],
-      key: 'id'
-    }
-  },
-  budget_id: {
+  project_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: _Budget["default"],
+      model: _Project["default"],
       key: 'id'
     }
   },
-  team_id: {
+  rol_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
-      model: _Team["default"],
+      model: _Rol["default"],
       key: 'id'
     }
   },
-  startdate: {
-    type: _sequelize["default"].DATEONLY,
-    allowNull: false
-  },
-  enddate: {
-    type: _sequelize["default"].DATEONLY,
-    allowNull: false
-  },
-  status: {
-    type: _sequelize["default"].STRING,
-    allowNull: false
-  },
-  location: {
-    type: _sequelize["default"].TEXT
+  file_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _File["default"],
+      key: 'id'
+    }
   },
   createdAt: {
     type: _sequelize["default"].DATE,
@@ -106,13 +78,5 @@ var Project = _database.sequelize.define('projects', {
   timestamps: true
 });
 
-Project.hasMany(_Task["default"], {
-  foreignKey: 'id'
-});
-
-_Task["default"].belongsTo(Project, {
-  foreignKey: 'project_id'
-});
-
-var _default = Project;
+var _default = Team;
 exports["default"] = _default;

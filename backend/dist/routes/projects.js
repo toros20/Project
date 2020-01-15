@@ -11,6 +11,10 @@ var _projectsController = require("../controllers/projectsController");
 
 var router = (0, _express.Router)();
 // rutas /api/projets
-router.post;
+router.post('/', _projectsController.createProjects);
+router.get('/', _projectsController.listProjects);
+router.get('/:id', _projectsController.findProject);
+router["delete"]('/:id', _projectsController.deleteProject);
+router.put('/:id', _projectsController.updateProject);
 var _default = router;
 exports["default"] = _default;

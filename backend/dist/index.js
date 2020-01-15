@@ -2,6 +2,10 @@
 
 var _app = _interopRequireDefault(require("./app"));
 
+require("@babel/polyfill");
+
+var _database = require("./database/database");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -26,7 +30,13 @@ function _main() {
           case 2:
             console.log('Server on port 5000');
 
-          case 3:
+            _database.sequelize.authenticate().then(function () {
+              console.log('Connection has been established successfully.');
+            })["catch"](function (err) {
+              console.error('Unable to connect to the database:', err);
+            });
+
+          case 4:
           case "end":
             return _context.stop();
         }

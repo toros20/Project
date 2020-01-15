@@ -7,15 +7,11 @@ exports["default"] = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
-var _Task = _interopRequireDefault(require("./Task"));
-
 var _Category = _interopRequireDefault(require("./Category"));
 
-var _Department = _interopRequireDefault(require("./Department"));
+var _Person = _interopRequireDefault(require("./Person"));
 
-var _Budget = _interopRequireDefault(require("./Budget"));
-
-var _Team = _interopRequireDefault(require("./Team"));
+var _Account = _interopRequireDefault(require("./Account"));
 
 var _database = require("../database/database");
 
@@ -23,7 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //para modelar datos 
 //import connection object
-var Project = _database.sequelize.define('projects', {
+var Budget = _database.sequelize.define('budgets', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
@@ -39,60 +35,64 @@ var Project = _database.sequelize.define('projects', {
   description: {
     type: _sequelize["default"].TEXT
   },
-  priority: {
-    type: _sequelize["default"].STRING,
+  excercise: {
+    type: _sequelize["default"].STRING
+  },
+  account_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Account["default"],
+      key: 'id'
+    }
+  },
+  person_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Person["default"],
+      key: 'id'
+    }
+  },
+  buddgetstart: {
+    type: _sequelize["default"].DOUBLE,
     allowNull: false
   },
-  color: {
-    type: _sequelize["default"].STRING,
-    allowNull: false,
-    defaultValue: "red"
-  },
-  category_id: {
-    type: _sequelize["default"].INTEGER,
-    allowNull: false,
-    references: {
-      model: _Category["default"],
-      key: 'id'
-    }
-  },
-  department_id: {
-    type: _sequelize["default"].INTEGER,
-    references: {
-      model: _Department["default"],
-      key: 'id'
-    }
-  },
-  budget_id: {
-    type: _sequelize["default"].INTEGER,
-    allowNull: false,
-    references: {
-      model: _Budget["default"],
-      key: 'id'
-    }
-  },
-  team_id: {
-    type: _sequelize["default"].INTEGER,
-    allowNull: false,
-    references: {
-      model: _Team["default"],
-      key: 'id'
-    }
-  },
-  startdate: {
-    type: _sequelize["default"].DATEONLY,
+  buddgeupdate: {
+    type: _sequelize["default"].DOUBLE,
     allowNull: false
   },
-  enddate: {
-    type: _sequelize["default"].DATEONLY,
+  buddgetfinal: {
+    type: _sequelize["default"].DOUBLE,
     allowNull: false
+  },
+  balance: {
+    type: _sequelize["default"].DOUBLE,
+    allowNull: false
+  },
+  returns: {
+    type: _sequelize["default"].DOUBLE
+  },
+  deviation: {
+    type: _sequelize["default"].DOUBLE
   },
   status: {
     type: _sequelize["default"].STRING,
     allowNull: false
   },
-  location: {
-    type: _sequelize["default"].TEXT
+  approval: {
+    type: _sequelize["default"].BOOLEAN
+  },
+  approvalby_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Person["default"],
+      key: 'id'
+    }
+  },
+  dateapproval: {
+    type: _sequelize["default"].DATEONLY
   },
   createdAt: {
     type: _sequelize["default"].DATE,
@@ -106,13 +106,5 @@ var Project = _database.sequelize.define('projects', {
   timestamps: true
 });
 
-Project.hasMany(_Task["default"], {
-  foreignKey: 'id'
-});
-
-_Task["default"].belongsTo(Project, {
-  foreignKey: 'project_id'
-});
-
-var _default = Project;
+var _default = Budget;
 exports["default"] = _default;
