@@ -49,6 +49,14 @@ const Task = sequelize.define('tasks',{
           key: 'id',
          }
     },
+    project_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Project,
+          key: 'id',
+         }
+    },
     account_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

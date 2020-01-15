@@ -1,5 +1,6 @@
 //para modelar datos 
 import Sequelize from 'sequelize';
+import Task from './Task';
 
 //import connection object
 import { sequelize } from '../database/database';
@@ -73,5 +74,8 @@ const Project = sequelize.define('projects',{
     }
 
 },{timestamps:true });
+
+Project.hasMany(Task, {foreignKey: 'id'})
+Task.belongsTo(Project, {foreignKey: 'project_id'})
 
 export default Project;
