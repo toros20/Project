@@ -1,11 +1,13 @@
+require('dotenv').config();
 import Sequelize from 'sequelize';
+
 //create cadena de conexion
 export const sequelize = new Sequelize(
-    'budgetsIHCAFE',
-    'userIHCAFE',
-    'Sistemas20!',
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
     {
-        host:'localhost',
+        host:process.env.DB_URI,
         dialect: 'postgres',
         pool:{
             max:5,
