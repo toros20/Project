@@ -4,7 +4,7 @@ export async function listProjects(req,res){
     try {
         const projects =await Project.findAll();
         res.json({
-            data: projects
+             projects
         })
     } catch (error) {
         console.log("ERROR AL QUERE LISTAR PROJECTS:"+error);
