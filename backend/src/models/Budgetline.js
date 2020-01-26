@@ -2,11 +2,13 @@
 import Sequelize from 'sequelize';
 import Person from './Person';
 import Account from './Account';
+import Project from './Project';
+import Category from './Category';
 
 //import connection object
 import { sequelize } from '../database/database';
 
-const Budget = sequelize.define('budgets',{
+const BudgetLine = sequelize.define('budgetlines',{
 
     id:{
         type: Sequelize.INTEGER,
@@ -23,11 +25,19 @@ const Budget = sequelize.define('budgets',{
     description:{
         type:Sequelize.TEXT
     },
-    excercise_start:{
+    date_start:{
         type: Sequelize.DATEONLY, 
     },
-    excercise_end:{
+    date_end:{
         type: Sequelize.DATEONLY, 
+    },
+    category_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Category,
+          key: 'id',
+         }
     },
     account_id: {
         type: Sequelize.INTEGER,
@@ -37,7 +47,23 @@ const Budget = sequelize.define('budgets',{
           key: 'id',
          }
     },
-    person_id: {
+    project_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Project,
+          key: 'id',
+         }
+    },
+    user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Person,
+          key: 'id',
+         }
+    },
+    supplier_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -98,7 +124,10 @@ const Budget = sequelize.define('budgets',{
 
 },{timestamps:true });
 
+BudgetLine.belongsTo(Project, {foreignKey: 'project_id'});
+BudgetLine.belongsTo(Person, {foreignKey: 'supplier_id'});
+BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
 //Budget.hasMany(Project);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 
-export default Budget;
+export default BudgetLine;

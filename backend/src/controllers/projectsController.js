@@ -28,6 +28,22 @@ export async function findProject(req,res){
     }
 }
 
+export async function findProjectsByBudgetId(req,res){
+    const { id } = req.params;
+    try {
+        const projectsbybudgetid = await Project.findAll({
+            where:{
+                budget_id:id
+            }
+        });
+        res.json({
+            projectsbybudgetid:projectsbybudgetid
+        })
+    } catch (error) {
+        console.log("ERROR AL QUERE BUSCAR EL PROJECT BY BUDGETID:"+error);
+    }
+}
+
 export async function deleteProject(req,res){
     const { id } = req.params;
     try {

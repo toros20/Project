@@ -35,7 +35,7 @@ const Person = sequelize.define('persons',{
     email:{
         type: Sequelize.STRING, 
     },
-    file:{
+    filename:{
         type: Sequelize.TEXT, 
     },
     

@@ -9,6 +9,8 @@ import cors from 'cors';
 
 //Import Routes
 import projectRoutes from './routes/projects';
+import budgetstRoutes from './routes/budgets';
+import budgetLinesRoutes from './routes/budgetslines';
 import taskRoutes from './routes/task';
 
 //Initialization
@@ -24,6 +26,9 @@ app.use(json()); // para entender archivos json
 
 //routes
 app.use('/api/projects',projectRoutes); 
+app.use('/api/budgets',budgetstRoutes); 
+app.use('/api/budgetlines',budgetLinesRoutes);
+
 app.use('/api/tasks',taskRoutes); 
 
 export default app;
