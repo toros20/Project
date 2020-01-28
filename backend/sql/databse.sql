@@ -155,4 +155,21 @@ CREATE TABLE IF NOT EXISTS tasks(
     updatedAt date
 );
 
+SELECT 
+    "budgetlines"."id", 
+    "category"."name", 
+    "category"."id" AS "category.id", 
+    "category"."name" AS "category.name", 
+    "category"."description" AS "category.description", 
+    "category"."typecategory" AS "category.typecategory", 
+    "category"."createdAt" AS "category.createdAt", 
+    "category"."updatedAt" AS "category.updatedAt" 
+    
+FROM 
+    "budgetlines" AS "budgetlines" 
 
+LEFT OUTER JOIN 
+    "categories" AS "category" ON 
+    "budgetlines"."category_id" = "category"."id" 
+
+WHERE "budgetlines"."project_id" = '1' ORDER BY "budgetlines"."category_id" ASC;

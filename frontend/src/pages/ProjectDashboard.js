@@ -8,25 +8,25 @@ export default class ProjectDashboard extends Component {
       
         return (
             <div>
-                 <div class="pcoded-content">
-                    <div class="pcoded-inner-content">
-                        <div class="main-body">
-                            <div class="page-wrapper">
-                                <div class="page-header page-wrapper">
-                                    <div class="page-header-title">
+                 <div className="pcoded-content">
+                    <div className="pcoded-inner-content">
+                        <div className="main-body">
+                            <div className="page-wrapper">
+                                <div className="page-header page-wrapper">
+                                    <div className="page-header-title">
                                         <h4>Renglones Presupuestarios</h4>
                                         <span>Descripcción de los costos y gastos.</span>
                                     </div>
-                                    <div class="page-header-breadcrumb">
-                                        <ul class="breadcrumb-title">
-                                            <li class="breadcrumb-item">
+                                    <div className="page-header-breadcrumb">
+                                        <ul className="breadcrumb-title">
+                                            <li className="breadcrumb-item">
                                                 <a href="index.html">
-                                                    <i class="icofont icofont-home"></i>
+                                                    <i className="icofont icofont-home"></i>
                                                 </a>
                                             </li>
-                                            <li class="breadcrumb-item"><Link to={'/budgets' }>Presupuestos</Link>
+                                            <li className="breadcrumb-item"><Link to={'/budgets' }>Presupuestos</Link>
                                             </li>
-                                            <li class="breadcrumb-item">Renglones
+                                            <li className="breadcrumb-item">Renglones
                                             </li>
                                         </ul>
                                     </div>

@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar'
 import listBudgets from './components/listBudgets'
 import Navbar from './components/Navbar'
 import projectDashboard from './pages/ProjectDashboard'
+import BudgetNew from './pages/BudgetNew'
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Router>
           <Navbar />
           <Sidebar />
-            <Route path="/budgets" exact component ={listBudgets} /> 
+            <Route path="/budgets" exact component ={listBudgets} />
+            <Route path="/budgets/new" exact component ={BudgetNew} /> 
             <Route path="/project/:id" exact component ={projectDashboard} /> 
       </Router>
     </div>

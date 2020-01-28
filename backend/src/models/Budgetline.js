@@ -125,8 +125,9 @@ const BudgetLine = sequelize.define('budgetlines',{
 },{timestamps:true });
 
 BudgetLine.belongsTo(Project, {foreignKey: 'project_id'});
+BudgetLine.belongsTo(Category, {foreignKey: 'category_id'});
 BudgetLine.belongsTo(Person, {foreignKey: 'supplier_id'});
-BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
+//BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
 //Budget.hasMany(Project);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 

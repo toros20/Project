@@ -48,6 +48,7 @@ export default class listBudgets extends Component {
                                         nombre={budget.name} 
                                         id={budget.id} 
                                         description={budget.description} 
+                                        
                                      />
                                     )
                                 }

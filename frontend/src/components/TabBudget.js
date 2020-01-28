@@ -40,6 +40,13 @@ export default class TabBudget extends Component {
                                             <Projectcard 
                                                name={project.name}
                                                id={project.id}
+                                               startdate={project.startdate}
+                                               enddate={project.enddate}
+                                               description={project.description}
+                                               status={project.status}
+                                               priority={project.priority}
+                                               location={project.location}
+                                               
                                             />
                                             )
                                         }

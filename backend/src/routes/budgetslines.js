@@ -1,10 +1,16 @@
 import {Router} from 'express';
 const router = Router();
 
-import {createBudgetLines,budgetLinesbyProjectId} from '../controllers/budgetLinesController'
+import {createBudgetLines,budgetLinesbyProjectId,budgetLinesCatgoriesByProjectId,budgetLinesbyProjectIdCategories} from '../controllers/budgetLinesController'
 
 // ruta /api/budgetlines/project/:id -> para buscar los renglones de cada projecto
 router.post('/project/:id',budgetLinesbyProjectId);
+// ruta /api/budgetlines/project/:id -> para buscar las categorias de rengones de este projecto
+router.post('/cat_project/:id',budgetLinesCatgoriesByProjectId);
+// ruta /api/budgetlines/project/:id -> para buscar los renglones de cada projecto y categoria
+router.post('/project/category/:idPro/:idCat',budgetLinesbyProjectIdCategories);
+
+
 // ruta /api/budgetlines/ -> para crear un nuevo renglon
 router.post('/',createBudgetLines);
 

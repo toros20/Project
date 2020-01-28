@@ -1,21 +1,54 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 export default class Projectcard extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+
+            budgetLines:[],
+            total_disponible:0.0,
+            total_ejecutado:0.0,
+            total_inicial:0.0,
+        }
+    }
+
+    async componentDidMount(){
+        const res = await axios.post('http://localhost:4000/api/budgetlines/project/'+this.props.id);
+        this.setState({budgetLines:res.data.budgetLines});
+    }
+
+    calculo(){ // para realizar el calculo de la suma de presupuestos
+        for (let index = 0; index < this.state.budgetLines.length; index++) {
+            this.state.total_inicial= this.state.total_inicial + this.state.budgetLines[index].buddgetstart;
+            this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLines[index].buddgetfinal;
+            this.state.total_disponible= this.state.total_disponible + this.state.budgetLines[index].balance;
+        }
+    }
+
     render() {
+        this.calculo();
         return (
            
                 <div className="col-sm-6">
                     <div className="card card-border-default">
                         <div className="card-header">
-                            <Link to={'/project/'+this.props.id}  className="card-title" >{this.props.name}-{this.props.id}</Link>
-                            <span className="label label-default f-right"> 28 January, 2015 </span>
+                            <Link to={'/project/'+this.props.id}  className="card-title" >{this.props.name}</Link>
+                            <span className="label label-warning f-right">  {this.props.startdate} </span>
+                            <span className="label label-danger f-right">  {this.props.enddate} </span>
                         </div>
                         <div className="card-block">
                             <div className="row">
                                 <div className="col-sm-12">
-                                    <p className="task-detail">A collection of textile samples lay spread out on the table One morning, when Gregor Samsa woke from troubled.</p>
-                                    <p className="task-due"><strong> Due : </strong><strong className="label label-danger">23 hours</strong></p>
+                                    <p className="task-detail">{this.props.description} </p>
+                                    <hr/>
+                                    <p className="task-due">
+                                        <strong> Ubiación : </strong><strong className="label label-warning">{this.props.location} </strong>
+                                        <strong> Estatus : </strong><strong className="label label-danger">{this.props.status}  </strong>
+                                        <strong> Prioridad : </strong><strong className="label label-warning">{this.props.priority} </strong>
+                                    </p>
                                 </div>
                                 {/* end of col-sm-8 */}
                             </div>
@@ -28,44 +61,15 @@ export default class Projectcard extends Component {
                                 <a href="#!"><i className="icofont icofont-plus" /></a>
                             </div>
                             <div className="task-board">
-                                <div className="dropdown-secondary dropdown">
-                                        <button className="btn btn-primary btn-mini dropdown-toggle waves-effect waves-light" type="button" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Normal</button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdown1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><span className="point-marker bg-danger" />Highest priority</a>
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><span className="point-marker bg-warning" />High priority</a>
-                                            <a className="dropdown-item waves-light waves-effect active" href="#!"><span className="point-marker bg-success" />Normal priority</a>
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><span className="point-marker bg-info" />Low priority</a>
-                                        </div>
+                                <div >  
+                                        <button className="btn btn-primary  waves-effect waves-light" type="button"  >LPS. {this.state.total_inicial} </button>
+                                        <button className="btn btn-danger  waves-effect waves-light" type="button"  >LPS. {this.state.total_ejecutado} </button>
+                                        <button className="btn btn-success  waves-effect waves-light" type="button"  >LPS. {this.state.total_disponible} </button>
+
                                         {/* end of dropdown menu */}
                                 </div>
-                                <div className="dropdown-secondary dropdown">
-                                    <button className="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Open</button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdown2" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        <a className="dropdown-item waves-light waves-effect active" href="#!">Open</a>
-                                        <a className="dropdown-item waves-light waves-effect" href="#!">On hold</a>
-                                        <a className="dropdown-item waves-light waves-effect" href="#!">Resolved</a>
-                                        <a className="dropdown-item waves-light waves-effect" href="#!">Closed</a>
-                                            <div className="dropdown-divider" />
-                                                <a className="dropdown-item waves-light waves-effect" href="#!">Dublicate</a>
-                                                <a className="dropdown-item waves-light waves-effect" href="#!">Invalid</a>
-                                                <a className="dropdown-item waves-light waves-effect" href="#!">Wontfix</a>
-                                            </div>
-                                            {/* end of dropdown menu */}
-                                    </div>
-                                        {/* end of dropdown-secondary */}
-                                    <div className="dropdown-secondary dropdown">
-                                            <button className="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="icofont icofont-navigation-menu" /></button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdown3" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><i className="icofont icofont-ui-alarm" /> Check in</a>
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><i className="icofont icofont-attachment" /> Attach screenshot</a>
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><i className="icofont icofont-spinner-alt-5" /> Reassign</a>
-                                            <div className="dropdown-divider" />
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><i className="icofont icofont-ui-edit" /> Edit task</a>
-                                            <a className="dropdown-item waves-light waves-effect" href="#!"><i className="icofont icofont-close-line" /> Remove</a>
-                                        </div>
-                                        {/* end of dropdown menu */}
-                                    </div>
-                                        {/* end of seconadary */}
+                                 {/* end of dropdown-secondary */}
+                                    
                                 </div>
                                 {/* end of pull-right class */}
                             </div>
