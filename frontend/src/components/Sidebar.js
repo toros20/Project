@@ -21,12 +21,21 @@ export default class Sidebar extends Component {
                             </li>
                         
                             <li className="pcoded-hasmenu">
-                                <Link to={'/budgets'} >
+                                <Link to='#' >
                                 <span className="pcoded-micon"><i className="ti-pencil-alt" /></span>
                                 <span className="pcoded-mtext" data-i18n="nav.navigate.main">Presupuestos</span>
                                 <span className="pcoded-mcaret" />
                                 </Link>
                                 <ul className="pcoded-submenu">
+                                <Link to="/budgets">
+                                    <li className=" ">
+                                        <a href="navbar-light.html">
+                                        <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Ver Presupuestos</span>
+                                        <span className="pcoded-mcaret" />
+                                        </a>
+                                    </li> 
+                                    </Link>
                                     <Link to="/budgets/new">
                                     <li className=" ">
                                         <a href="navbar-light.html">
