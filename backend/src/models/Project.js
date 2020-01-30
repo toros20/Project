@@ -97,6 +97,7 @@ const Project = sequelize.define('projects',{
 
 Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 
+
 Project.hasMany(Task, {foreignKey: 'id'});
 Task.belongsTo(Project, {foreignKey: 'project_id'});
 

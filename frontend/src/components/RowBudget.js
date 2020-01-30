@@ -54,8 +54,8 @@ export default class RowBudget extends Component {
                                         <th>Ejecutado</th>
                                         <th>Discponible</th>
                                         <th>Estado</th>
-                                        <th>Aprovado</th>
-                                        <th>Fecha de Aprovación</th>
+                                        <th>Aprobado</th>
+                                        <th>Fecha de Aprobación</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>

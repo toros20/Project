@@ -19,21 +19,21 @@ export default class TabBudget extends Component {
     render() {
         return (
              <div> 
-                 <div class="page-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5><a href="#">{this.props.nombre}</a></h5>
+                 <div className="page-body">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h5><a href="#">{this.props.nombre} </a></h5>
                                     <span>{this.props.description}</span>
-                                    <div class="card-header-right">
-                                        <i class="icofont icofont-rounded-down"></i>
-                                        <i class="icofont icofont-refresh"></i>
-                                        <i class="icofont icofont-close-circled"></i>
+                                    <div className="card-header-right">
+                                        <i className="icofont icofont-rounded-down"></i>
+                                        <i className="icofont icofont-refresh"></i>
+                                        <i className="icofont icofont-close-circled"></i>
                                     </div>
                                 </div>
-                                <div class="card-block">
-                                    <div class="row">
+                                <div className="card-block">
+                                    <div className="row">
                                         
                                         {
                                             this.state.projects.map( project =>   

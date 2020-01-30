@@ -1,8 +1,9 @@
 import Project from '../models/Project';
+import Budget from '../models/Budget'
 
 export async function listProjects(req,res){
     try {
-        const projects =await Project.findAll();
+        const projects =await Project.findAll({include:[Budget] } );
         res.json({
              projects
         })

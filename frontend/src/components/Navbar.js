@@ -24,7 +24,7 @@ export default class Navbar extends Component {
                             <div>
                             <ul className="nav-left">
                                 <li>
-                                <div className="sidebar_toggle"><Link to="javascript:void(0)"><i className="ti-menu" /></Link></div>
+                                <div className="sidebar_toggle"><a href="javascript:void(0)"><i className="ti-menu" /></a></div>
                                 </li>
                                 <li>
                                 <a className="main-search morphsearch-search" href="#">
@@ -33,7 +33,7 @@ export default class Navbar extends Component {
                                 </a>
                                 </li>
                                 <li>
-                                <a href="#!" onClick="javascript:toggleFullScreen()">
+                                <a href="#!" onclick="javascript:toggleFullScreen()">
                                     <i className="ti-fullscreen" />
                                 </a>
                                 </li>

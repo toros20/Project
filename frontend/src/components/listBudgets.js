@@ -20,23 +20,23 @@ export default class listBudgets extends Component {
     render() {
         return (
             <div>
-                <div class="pcoded-content">
-                    <div class="pcoded-inner-content">
-                        <div class="main-body">
-                            <div class="page-wrapper">
-                                <div class="page-header page-wrapper">
-                                    <div class="page-header-title">
+                <div className="pcoded-content">
+                    <div className="pcoded-inner-content">
+                        <div className="main-body">
+                            <div className="page-wrapper">
+                                <div className="page-header page-wrapper">
+                                    <div className="page-header-title">
                                         <h4>Presupuestos</h4>
                                         <span>Listado de Presupuestos Creados</span>
                                     </div>
-                                    <div class="page-header-breadcrumb">
-                                        <ul class="breadcrumb-title">
-                                            <li class="breadcrumb-item">
+                                    <div className="page-header-breadcrumb">
+                                        <ul className="breadcrumb-title">
+                                            <li className="breadcrumb-item">
                                                 <a href="index.html">
-                                                    <i class="icofont icofont-home"></i>
+                                                    <i className="icofont icofont-home"></i>
                                                 </a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="#!">Pages</a>
+                                            <li className="breadcrumb-item"><a href="#!">Pages</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -48,7 +48,7 @@ export default class listBudgets extends Component {
                                         nombre={budget.name} 
                                         id={budget.id} 
                                         description={budget.description} 
-                                        
+                                       
                                      />
                                     )
                                 }

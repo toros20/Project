@@ -5,7 +5,7 @@ import sequelize from 'sequelize';
 
 //funcion para obtener todos los renglones presupuestario de este projecto id
 //nos ayuda a calcular los totales de presupuestos para las RowCardProjects
- export async function budgetLinesbyProjectId(req,res){
+export async function budgetLinesbyProjectId(req,res){
     const { id } = req.params;
     try {
        
