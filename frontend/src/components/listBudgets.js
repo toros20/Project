@@ -48,6 +48,11 @@ export default class listBudgets extends Component {
                                         nombre={budget.name} 
                                         id={budget.id} 
                                         description={budget.description} 
+                                        account={budget.account.name} 
+                                        budgetstart={budget.buddgetstart} 
+                                        buddgetupdate={budget.buddgeupdate} 
+                                        balance={budget.balance} 
+                                        returns={budget.returns} 
                                        
                                      />
                                     )

@@ -1,6 +1,20 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
+import CategoryTable from '../components/CategoryTable'
 export default class ListCategories extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            categories_parents:[],
+        }
+    }
+
+    async componentDidMount(){
+        const res = await axios.get('http://localhost:4000/api/categories/categories_parents');
+        this.setState({categories_parents:res.data.categories});
+    }
+
     render() {
         return (
             <div>
@@ -37,48 +51,50 @@ export default class ListCategories extends Component {
                             {/* Hover table card start */}
                             <div className="card">
                                 <div className="card-header">
-                                <h5>Listado de Categorias</h5>
-                                <div><button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i className="icofont icofont-plus m-r-5" /> Crear Nuevo </button></div>
-                                <div className="card-header-right">
-                                    <i className="icofont icofont-rounded-down" />
-                                    <i className="icofont icofont-refresh" />
-                                    <i className="icofont icofont-close-circled" />
-                                </div>
+                                <h5>Listado de Categorias Principales</h5>
+                                <div><button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i className="icofont icofont-plus m-r-5" />Nueva Categoria Principal </button></div>
+                                    <div className="card-header-right">
+                                        <i className="icofont icofont-rounded-down" />
+                                        <i className="icofont icofont-refresh" />
+                                        <i className="icofont icofont-close-circled" />
+                                    </div>
                                 </div>
                                 <div className="card-block table-border-style">
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                     <thead>
                                         <tr>
-                                        <th>#</th>
+                                        <th>Código</th>
                                         <th>Categoria</th>
                                         <th>Descripción</th>
-                                        <th>Tipo</th>
+                                        <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        </tr>
+
+                                        {this.state.categories_parents.map(cat_parent => 
+                                            <tr>
+                                                <td >{cat_parent.code}</td>
+                                                <td >{cat_parent.name}</td>
+                                                <td >{cat_parent.description}</td>
+                                                <td  className="action-icon"> 
+                                                    <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
+                                                    <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>
+                                                </td>
+                                            </tr>
+                                        )}
+                                        
                                     </tbody>
                                     </table>
                                 </div>
                                 </div>
+                                
+                                {this.state.categories_parents.map(cat_parent => 
+                                   
+                                    <CategoryTable className="mt-3" idCat={cat_parent.id} nameCat={cat_parent.name} />
+                                    
+                                )}
+
                             </div>
                             {/* Hover table card end */}
 

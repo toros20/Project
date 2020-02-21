@@ -100,5 +100,6 @@ const Budget = sequelize.define('budgets',{
 
 //Budget.hasMany(Project);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
+Budget.belongsTo(Account, {foreignKey: 'account_id'});
 
 export default Budget;

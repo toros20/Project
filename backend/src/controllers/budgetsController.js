@@ -1,5 +1,5 @@
 import Budget from '../models/Budget';
-
+import Account from '../models/Account';
 export async function createBudget(req, res){
 
     const {code , name , description , excercise_start , excercise_end , account_id , person_id , buddgetstart , buddgeupdate , buddgetfinal , balance , returns , deviation , status , approval , approvalby_id, dateapproval } = req.body;
@@ -51,7 +51,7 @@ export async function createBudget(req, res){
 
 export async function listBudgets(req,res){
     try {
-        const budgets =await Budget.findAll();
+        const budgets =await Budget.findAll({include:[Account] } );
         res.json({
             budgets
         })

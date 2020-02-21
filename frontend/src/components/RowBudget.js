@@ -7,11 +7,15 @@ export default class RowBudget extends Component {
         super();
         this.state = {
             budgetLines:[],
-            total_disonible:0.0,
+            total_disponible:0.0,
             total_ejecutado:0.0,
             total_inicial:0.0,
 
+            total_solicitado:0.0,
+
              nameCategory:"Gastos",
+            //para guardar la desicion de aprobar o no el budgetline
+             aprobar:0
 
         }
     }
@@ -25,13 +29,33 @@ export default class RowBudget extends Component {
         this.setState({nameCategory:res3.data.category.name});
     }
 
+    formatMoney(number) {
+        return number.toLocaleString('en-US', { style: 'currency', currency: 'HNL' });
+    }
+      
+      //obtener la eleccion sobre aprobar o no el budgetline 1=si, 2 = NO
+    onchangeSelectAprobar = (e) => {this.setState({aprobar: e.target.value})}
+
+    onSubmitAprobar = async (budgetLine_id) =>{
+        //e.preventDefault();
+       
+        //const res_aprobar = await axios.post('http://localhost:4000/api/budgetlines/aprobar/'+budgetLine_id+'/'+this.state.aprobar);
+    }
+
     calculo(){ // para realizar el calculo de la suma de presupuestos
+
+        this.state.total_inicial = 0.0; this.state.total_ejecutado = 0.0;this.state.total_disponible = 0.0;this.state.total_solicitado = 0.0;
 
         for (let index = 0; index < this.state.budgetLines.length; index++) {
 
-            this.state.total_inicial= this.state.total_inicial + this.state.budgetLines[index].buddgetstart;
-            this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLines[index].buddgetfinal;
-            this.state.total_disonible= this.state.total_disonible + this.state.budgetLines[index].balance;   
+            if (this.state.budgetLines[index].status == 'Solicitado') {
+                this.state.total_solicitado = this.state.total_solicitado + this.state.budgetLines[index].buddgetstart;
+            }else{
+                this.state.total_inicial= this.state.total_inicial + this.state.budgetLines[index].buddgetstart;
+                this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLines[index].buddgetfinal;
+                this.state.total_disponible= this.state.total_disponible + this.state.budgetLines[index].balance; 
+            }
+            
         }
     }
 
@@ -54,8 +78,8 @@ export default class RowBudget extends Component {
                                         <th>Ejecutado</th>
                                         <th>Discponible</th>
                                         <th>Estado</th>
-                                        <th>Aprobado</th>
-                                        <th>Fecha de Aprobación</th>
+                                        <th>Rembolsar</th>
+                                      
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -77,66 +101,164 @@ export default class RowBudget extends Component {
                                                     <label >{budgetLine.person.fullname}</label>
                                                 </td>
                                                 <td>
-                                                    <label className="text-success">LPS. {budgetLine.buddgetstart}</label>
+                                                    <label className="text-info"> {this.formatMoney( budgetLine.buddgetstart)}</label>
                                                 </td>
                                                 <td>
-                                                    <label className="text-info">LPS. {budgetLine.buddgetfinal}</label>
+                                                    <label className="text-danger"> {this.formatMoney(budgetLine.buddgetfinal)}</label>
                                                 </td>
                                                 <td>
-                                                    <label className="text-warning">LPS. {budgetLine.balance}</label>
+                                                    <label className="text-success"> {this.formatMoney(budgetLine.balance)}</label>
                                                 </td>
-                                                <td>
-                                                    <label >{budgetLine.status}</label>
-                                                </td>
-                                                <td>
-                                                    <label  >{budgetLine.approvalby_id}</label>
-                                                </td>
-                                                <td>
-                                                    <label  >{budgetLine.dateapproval}</label>
-                                                </td>
-                                            
-                                                <td className="action-icon"> 
+                                                                                        
+                                                {budgetLine.status == 'Solicitado' 
+                                                     
+                                                ?<td><button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target={'#aprobar_'+budgetLine.id}>Decidir</button> </td>
+                                                :<td><label >{budgetLine.status}</label></td>
+                                                }
+
+                                                {budgetLine.status == 'Aprobado' 
+                                                     
+                                                ?<td><button type="button" class="btn btn-warning waves-effect" data-toggle="modal" data-target={'#rembolsar_'+budgetLine.id}>Rembolsar</button></td>
+                                                :<td align="center"><label >---</label></td>
+                                                }
+
+                                                
+                                                <td align="center" className="action-icon"> 
                                                     <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
                                                     <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>
                                                 </td>
+
+                                               
+                         
+                                                <div class="modal fade" id={'aprobar_'+budgetLine.id} tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">{budgetLine.name}-{this.formatMoney(budgetLine.buddgetstart)} </h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>  
+                                                            <form >
+
+                                                                <div class="modal-body">                                                                
+                                                                    <select onChange={this.onchangeSelectAprobar} name="select" className="form-control mt-3">
+                                                                            <option value="0">Seleccion Opción</option>
+                                                                            <option value="1">SI APROBAR</option>
+                                                                            <option value="2">NO APROBAR</option>
+                                                                    </select>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light ">Guardar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id={'rembolsar_'+budgetLine.id} tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Rembolsar {budgetLine.name}-{this.formatMoney(budgetLine.buddgetstart)} </h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" align="center">
+                                                                
+                                                                <div>
+                                                                    <label htmlFor="">Descripción del Rembolso</label>
+                                                                    <textarea className="form-control" style={{width:'100%'}} id="" cols="30" rows="10">
+
+                                                                    </textarea>
+                                                                </div>
+                                                                <input type="hidden" name={"input_rembolsar_"+budgetLine.id}  value={budgetLine.id}/>
+                                                                <div className="mt-3">
+                                                                    <button type="button" className="btn btn-primary waves-effect waves-light ">Reembolsar</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
                                             </tr>
-                                       
                                         )
                                     }
                                     
                                     <tr>
-                                        <td className="pro-name">
+                                        <td align="center" className="pro-name">
                                             <label className="text-danger">---</label>
                                         </td>
                                         <td className="pro-name">
-                                            <h6>Total de Prespuesto</h6>
+                                            <h6>Total de Prespuesto APROBADO</h6>
                                             <span>Suma de los Totales</span>
                                         </td>
-                                        <td>  
+                                        <td align="center">   
                                             <label >---</label>
                                         </td>
                                         <td>
-                                            <label className="text-success">{this.state.total_inicial}</label>
+                                            <label className="text-info">{this.formatMoney(this.state.total_inicial)}</label>
                                         </td>
                                         <td>
-                                            <label className="text-info">{this.state.total_ejecutado}</label>
+                                            <label className="text-danger">{this.formatMoney(this.state.total_ejecutado)}</label>
                                         </td>
                                         <td>
-                                            <label className="text-warning">{this.state.total_disonible}</label>
+                                            <label className="text-success">{this.formatMoney(this.state.total_disponible)}</label>
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             <label >---</label>
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             <label  >---</label>
                                         </td>
-                                        <td>
+                                        <td align="center">
                                             <label  >---</label>
                                         </td>
                                     
                                         <td className="action-icon"> 
-                                            <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
-                                            <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>
+                                          
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center" className="pro-name">
+                                            <label className="text-danger">---</label>
+                                        </td>
+                                        <td className="pro-name">
+                                            <h6>Total de Prespuesto SOLICITADO</h6>
+                                            <span>Suma de los Totales</span>
+                                        </td>
+                                        <td align="center">  
+                                            <label >---</label>
+                                        </td>
+                                        <td>
+                                            <label>{this.formatMoney(this.state.total_solicitado)}</label>
+                                        </td>
+                                        <td align="center">
+                                            <label className="text-info">---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label className="text-warning">---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label >---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label  >---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label  >---</label>
+                                        </td>
+                                    
+                                        <td className="action-icon"> 
+                                          
                                         </td>
                                     </tr>
                                     

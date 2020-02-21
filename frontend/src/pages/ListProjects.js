@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 export default class ListProjects extends Component {
 
     constructor() {
@@ -35,7 +36,7 @@ export default class ListProjects extends Component {
                                     <i className="icofont icofont-home" />
                                     </a>
                                 </li>
-                                <li className="breadcrumb-item"><a href="#!">Projectos</a>
+                                <li className="breadcrumb-item"><a href="#!">Proyectos</a>
                                 </li>
                                 <li className="breadcrumb-item"><a href="#!">Listar</a>
                                 </li>
@@ -51,6 +52,7 @@ export default class ListProjects extends Component {
                                 <div className="card">
                                     <div className="card-header">
                                     <h5>Projectos</h5>
+                                    <div><Link to={'/projects/new'} className="btn btn-success waves-effect waves-light f-right d-inline-block md-trigger" > <i className="icofont icofont-plus m-r-5" /> Crear Nuevo </Link></div>
                                     <div className="card-header-right">
                                         <i className="icofont icofont-rounded-down" />
                                         <i className="icofont icofont-refresh" />

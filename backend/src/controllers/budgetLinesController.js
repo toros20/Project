@@ -1,6 +1,8 @@
 import Budgetline from '../models/Budgetline'
 import Category from '../models/Category'
 import Person from '../models/Person'
+import Project from '../models/Project'
+import Budget from '../models/Budget'
 import sequelize from 'sequelize';
 
 //funcion para obtener todos los renglones presupuestario de este projecto id
@@ -111,10 +113,55 @@ export async function createBudgetLines(req, res){
         });
 
         if (newBudgetLine){
+
+            //acutualizamos la base de datos , el balance y el budget star, ya que solo es soliictado
+            try {
+
+                 //buscamos el projecto y el presupuesto al que pertenece este renglon.
+                const project_budget =await  Project.findOne({
+                    where:{
+                        id:project_id
+                    },
+                    include:[Budget] 
+                });
+            
+                //obtenemos el presupuesto inicial y el balance actual de la base de datos
+                const Budgetstart_old = project_budget.budget.buddgetstart;
+                const balance_old = project_budget.budget.balance;
+            
+                //calculamos el nuevo balance y budgetstart
+                const newBudgetStar = parseFloat(Budgetstart_old) + parseFloat(buddgetstart);
+                const newBalance = parseFloat(balance_old) + parseFloat(balance);
+
+                const result_update = await Budget.update({
+                    buddgetstart:newBudgetStar,
+                    balance:newBalance
+                },
+                    {
+                        where:{id:project_budget.budget.id}
+                    }
+                )
+
+                if(result_update){
+                    res.json({
+                        message:"BudgetStarNEW Actualizado Satifactoriamente"
+                    })
+                }
+                
+            }catch(erro){
+                console.log(erro);
+                return res.json({
+                    message: 'Something Wrong in Update BudgetLine',
+                    data:{}
+                });
+            }
+           
+
             return res.json({
                 message:"Renglon Presupuestario Creado Exitosamente",
                 data:newBudgetLine
             });
+
         }else{
             return res.json({
                 message:"No se Pudo Crear el Nuevo Renglon Presupuestario",
@@ -130,6 +177,50 @@ export async function createBudgetLines(req, res){
         });
     }
 
+}
+
+export async function AprobarBudgetLinesbyId(req, res){
+
+    let Nuevo_status = '';
+
+    const { id, status } = req.params;
+    console.log("VALOR DE ID:"+id);
+    console.log("VALOR DE SATUS:"+status);
+    if (status!=0) {
+        
+        if (status=="1") {
+            Nuevo_status ="Aprobado";
+        }
+        if(status=="2") {
+            Nuevo_status ="No Aprobado";
+        }
+
+        try { 
+            const result = await Budgetline.update({
+                status:Nuevo_status
+            },
+            {
+                where:{id}
+            }
+            );
+    
+            if(result){
+                res.json({
+                    message:"Actualizado Satifactoriamente"
+                })
+            }
+              
+        }catch(erro){
+            console.log(erro);
+            return res.json({
+                message: 'Something Wrong in Update',
+                data:{}
+            });
+        }
+        
+    }
+   
+    
 }
 
 

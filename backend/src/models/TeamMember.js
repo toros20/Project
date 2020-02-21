@@ -1,10 +1,15 @@
 //para modelar datos 
 import Sequelize from 'sequelize';
+import Person from './Person';
+import Project from './Project';
+import Rol from './Rol';
+import Rol from './Team';
+import File from './File';
 
 //import connection object
 import { sequelize } from '../database/database';
 
-const Category = sequelize.define('categories',{
+const Team = sequelize.define('teams',{
 
     id:{
         type: Sequelize.INTEGER,
@@ -12,20 +17,31 @@ const Category = sequelize.define('categories',{
         autoIncrement: true
     },
    
-    name:{
-        type: Sequelize.STRING, 
-        allowNull: false,
-    },
-    code:{
-        type: Sequelize.STRING, 
-        allowNull: false,
-    },
-    description:{
-        type:Sequelize.TEXT
-    },
-    parent_category:{
+    team_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: Team,
+          key: 'id',
+         }
+    },
+  
+    person_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Person,
+          key: 'id',
+         }
+    },
+  
+    rol_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: Rol,
+          key: 'id',
+         }
     },
     
     createdAt:{
@@ -41,4 +57,4 @@ const Category = sequelize.define('categories',{
 
 },{timestamps:true });
 
-export default Category;
+export default Team;

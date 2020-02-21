@@ -12,6 +12,8 @@ export default class Projectcard extends Component {
             total_disponible:0.0,
             total_ejecutado:0.0,
             total_inicial:0.0,
+            total_Solicitado:0.0,
+            total_reembolsos:0.0
         }
     }
 
@@ -22,11 +24,20 @@ export default class Projectcard extends Component {
 
     calculo(){ // para realizar el calculo de la suma de presupuestos
         for (let index = 0; index < this.state.budgetLines.length; index++) {
-            this.state.total_inicial= this.state.total_inicial + this.state.budgetLines[index].buddgetstart;
-            this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLines[index].buddgetfinal;
-            this.state.total_disponible= this.state.total_disponible + this.state.budgetLines[index].balance;
+            this.state.total_inicial +=   this.state.budgetLines[index].buddgetstart;
+            this.state.total_ejecutado += this.state.budgetLines[index].buddgetfinal;
+            this.state.total_disponible +=  this.state.budgetLines[index].balance;
+            this.state.total_reembolsos += this.state.budgetLines[index].returns;
+
+            if ( this.state.budgetLines[index].status == "Solicitado") {
+                this.state.total_Solicitado += this.state.budgetLines[index].buddgetstart;
+            }
         }
     }
+
+     formatMoney(number) {
+        return number.toLocaleString('en-US', { style: 'currency', currency: 'HNL' });
+      }
 
     render() {
         this.calculo();
@@ -35,9 +46,10 @@ export default class Projectcard extends Component {
                 <div className="col-sm-6">
                     <div className="card card-border-default">
                         <div className="card-header">
-                            <Link to={'/project/'+this.props.id}  className="card-title" >{this.props.name}</Link>
-                            <span className="label label-warning f-right">  {this.props.startdate} </span>
+                            <Link to={'/project/'+this.props.id} className="card-title" >{this.props.name}</Link>
+                            
                             <span className="label label-danger f-right">  {this.props.enddate} </span>
+                            <span className="label label-primary f-right">  {this.props.startdate} </span>
                         </div>
                         <div className="card-block">
                             <div className="row">
@@ -60,20 +72,56 @@ export default class Projectcard extends Component {
                                 <a href="#!"><img className="img-fluid img-circle" src="assets/images/avatar-2.png" alt={1} /></a>
                                 <a href="#!"><i className="icofont icofont-plus" /></a>
                             </div>
-                            <div className="task-board">
+                            <hr/>
+                            <div >
+                                <table style={{width:'100%'}} className="table-striped">
+                                    <thead>
+                                        <th>Tipo</th>
+                                        <th>Aprobado</th>
+                                        <th>Solicitado</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Presupuesto Inicial </td>
+                                            <td>{this.formatMoney(this.state.total_inicial)}</td>
+                                            <td>{this.formatMoney(this.state.total_Solicitado)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Presupuesto Ejecutado</td>
+                                            <td >{this.formatMoney(this.state.total_ejecutado)}</td>
+                                            <td>---</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Total de Reembolsos</td>
+                                            <td >{this.formatMoney(this.state.total_reembolsos)}</td>
+                                            <td>---</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Presupueto Disponible</td>
+                                            <td>{this.formatMoney(this.state.total_disponible)}</td>
+                                            <td>---</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
                                 <div >  
-                                        <button className="btn btn-primary  waves-effect waves-light" type="button"  >LPS. {this.state.total_inicial} </button>
+                                   {/*      <button className="btn btn-primary  waves-effect waves-light" type="button"  >LPS. {this.state.total_inicial} </button>
                                         <button className="btn btn-danger  waves-effect waves-light" type="button"  >LPS. {this.state.total_ejecutado} </button>
                                         <button className="btn btn-success  waves-effect waves-light" type="button"  >LPS. {this.state.total_disponible} </button>
-
+ */}
                                         {/* end of dropdown menu */}
                                 </div>
                                  {/* end of dropdown-secondary */}
                                     
                                 </div>
                                 {/* end of pull-right class */}
-                            </div>
-                            {/* end of card-footer */}
+                        </div>
+                        {/* end of card-footer */}
                         </div>
                     </div>
            

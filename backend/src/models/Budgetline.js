@@ -33,7 +33,7 @@ const BudgetLine = sequelize.define('budgetlines',{
     },
     category_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: Category,
           key: 'id',
@@ -102,7 +102,7 @@ const BudgetLine = sequelize.define('budgetlines',{
     },
     approvalby_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: Person,
           key: 'id',

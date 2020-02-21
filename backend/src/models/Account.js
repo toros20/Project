@@ -21,14 +21,14 @@ const Account = sequelize.define('accounts',{
     description:{
         type:Sequelize.TEXT
     },
-    category_id: {
+   /*  category_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: Category,
           key: 'id',
          }
-    },
+    }, */
     person_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

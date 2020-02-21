@@ -67,7 +67,7 @@ export default class Sidebar extends Component {
                                         </Link>
                                     </li> 
                                     <li className=" ">
-                                        <Link to={'/project/new'} href="navbar-light.html">
+                                        <Link to={'/projects/new'} href="navbar-light.html">
                                         <span className="pcoded-micon"><i className="ti-angle-right" /></span>
                                         <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Nuevo Proyectos</span>
                                         <span className="pcoded-mcaret" />
@@ -78,7 +78,7 @@ export default class Sidebar extends Component {
 
                             <li className="pcoded-hasmenu">
                                 <a href="#">
-                                <span className="pcoded-micon"><i className="ti-menu-alt" /></span>
+                                <span className="pcoded-micon"><i className="ti-layers" /></span>
                                 <span className="pcoded-mtext" data-i18n="nav.navigate.main">Categorias</span>
                                 <span className="pcoded-mcaret" />
                                 </a>
@@ -123,18 +123,18 @@ export default class Sidebar extends Component {
                         <ul className="pcoded-item pcoded-left-item">
 
                         <li className="pcoded-hasmenu">
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                 <span className="pcoded-micon"><i className="ti-book" /></span>
                                 <span className="pcoded-mtext" data-i18n="nav.navigate.main">Cuentas</span>
                                 <span className="pcoded-mcaret" />
                                 </a>
                                 <ul className="pcoded-submenu">
                                     <li className=" ">
-                                        <a href="navbar-light.html">
+                                    <Link to={'/accounts'} >
                                         <span className="pcoded-micon"><i className="ti-angle-right" /></span>
-                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Navbar</span>
+                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Ver Cuentas</span>
                                         <span className="pcoded-mcaret" />
-                                        </a>
+                                        </Link>
                                     </li> 
                                 </ul>
                             </li>
@@ -158,14 +158,14 @@ export default class Sidebar extends Component {
                             <li className="pcoded-hasmenu">
                                 <a href="javascript:void(0)">
                                 <span className="pcoded-micon"><i className="ti-reload" /></span>
-                                <span className="pcoded-mtext" data-i18n="nav.navigate.main">Tranferencias</span>
+                                <span className="pcoded-mtext" data-i18n="nav.navigate.main">Rembolsos</span>
                                 <span className="pcoded-mcaret" />
                                 </a>
                                 <ul className="pcoded-submenu">
                                     <li className=" ">
                                         <a href="navbar-light.html">
                                         <span className="pcoded-micon"><i className="ti-angle-right" /></span>
-                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Navbar</span>
+                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Ver Rembolsos</span>
                                         <span className="pcoded-mcaret" />
                                         </a>
                                     </li> 
@@ -186,45 +186,66 @@ export default class Sidebar extends Component {
                                 </a>
                                 <ul className="pcoded-submenu">
                                     <li className=" ">
-                                        <a href="navbar-light.html">
-                                        <span className="pcoded-micon"><i className="ti-angle-right" /></span>
-                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Navbar</span>
-                                        <span className="pcoded-mcaret" />
-                                        </a>
+                                        <Link to={'/teams_list'} >
+                                            <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                            <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Ver Equipos</span>
+                                            <span className="pcoded-mcaret" />
+                                        </Link>
+                                    </li> 
+                                    <li className=" ">
+                                        <Link to={'/teams_list'} >
+                                            <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                            <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Nuevo Equipo</span>
+                                            <span className="pcoded-mcaret" />
+                                        </Link>
                                     </li> 
                                 </ul>
                             </li>
                         
                         <li className="pcoded-hasmenu">
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                 <span className="pcoded-micon"><i className="ti-server" /></span>
                                 <span className="pcoded-mtext" data-i18n="nav.navigate.main">Proveedores</span>
                                 <span className="pcoded-mcaret" />
                                 </a>
                                 <ul className="pcoded-submenu">
                                     <li className=" ">
-                                        <a href="navbar-light.html">
-                                        <span className="pcoded-micon"><i className="ti-angle-right" /></span>
-                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Navbar</span>
-                                        <span className="pcoded-mcaret" />
-                                        </a>
+                                        <Link to={'/suppliers_list'} >
+                                            <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                            <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Ver Proveedores</span>
+                                            <span className="pcoded-mcaret" />
+                                        </Link>
+                                    </li> 
+                                    <li className=" ">
+                                        <Link to={'/suppliers_list'} >
+                                            <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                            <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Nuevo Proveedore</span>
+                                            <span className="pcoded-mcaret" />
+                                        </Link>
                                     </li> 
                                 </ul>
                             </li>
 
                             <li className="pcoded-hasmenu">
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                 <span className="pcoded-micon"><i className="ti-user" /></span>
-                                <span className="pcoded-mtext" data-i18n="nav.navigate.main">Uusarios</span>
+                                <span className="pcoded-mtext" data-i18n="nav.navigate.main">Usarios</span>
                                 <span className="pcoded-mcaret" />
                                 </a>
                                 <ul className="pcoded-submenu">
                                     <li className=" ">
-                                        <a href="navbar-light.html">
-                                        <span className="pcoded-micon"><i className="ti-angle-right" /></span>
-                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Navbar</span>
-                                        <span className="pcoded-mcaret" />
-                                        </a>
+                                        <Link to={'/users_list'} >
+                                            <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                            <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Ver Usuarios</span>
+                                            <span className="pcoded-mcaret" />
+                                        </Link>
+                                    </li> 
+                                    <li className=" ">
+                                        <Link to={'/suppliers_list'} >
+                                            <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                            <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Nuevo Usuario</span>
+                                            <span className="pcoded-mcaret" />
+                                        </Link>
                                     </li> 
                                 </ul>
                             </li>

@@ -64,24 +64,22 @@ export async function deleteProject(req,res){
 
 export async function createProjects(req, res){
 
-    const { code,name,description,category_id,startdate,enddate,department_id,status,location,budget_id,team_id,priority,color } = req.body;
+    const { code,name,description,startdate,enddate,status,location,budget_id,team_id,priority } = req.body;
     try {
         let newProject = await Project.create({
             code ,
             name ,
             description ,
-            category_id ,
             startdate ,
             enddate ,
-            department_id, 
             status ,
             location ,
             budget_id  ,
             team_id ,
-            priority ,
-            color 
+            priority 
+            
         },{
-            fields:['code','name','description','category_id','startdate','enddate','department_id','status','location','budget_id','team_id','priority','color']
+            fields:['code','name','description','startdate','enddate','status','location','budget_id','team_id','priority']
         });
 
         if (newProject){

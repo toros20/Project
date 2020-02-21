@@ -12,7 +12,9 @@ import projectRoutes from './routes/projects';
 import budgetstRoutes from './routes/budgets';
 import budgetLinesRoutes from './routes/budgetslines';
 import categoriesRoutes from './routes/categories';
+import teamsRoutes from './routes/teams';
 import taskRoutes from './routes/task';
+import accountsRoutes from './routes/accounts';
 
 //Initialization
 const app = express();
@@ -30,6 +32,8 @@ app.use('/api/projects',projectRoutes);
 app.use('/api/budgets',budgetstRoutes); 
 app.use('/api/budgetlines',budgetLinesRoutes);
 app.use('/api/categories',categoriesRoutes);
+app.use('/api/teams',teamsRoutes);
+app.use('/api/accounts',accountsRoutes);
 
 app.use('/api/tasks',taskRoutes); 
 
