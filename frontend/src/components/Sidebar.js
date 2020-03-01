@@ -19,6 +19,25 @@ export default class Sidebar extends Component {
                                 <span className="pcoded-mcaret" />
                                 </Link>
                             </li>
+
+                            <li className="pcoded-hasmenu">
+                                <Link to='#' >
+                                <span className="pcoded-micon"><i className="ti-pencil-alt" /></span>
+                                <span className="pcoded-mtext" data-i18n="nav.navigate.main">ATLAS</span>
+                                <span className="pcoded-mcaret" />
+                                </Link>
+                                <ul className="pcoded-submenu">
+                                <Link to="/atlas">
+                                    <li className=" ">
+                                        <a href="navbar-light.html">
+                                        <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                        <span className="pcoded-mcaret" />
+                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Gestión de Atlas</span>
+                                        </a>
+                                    </li> 
+                                    </Link>
+                                </ul>
+                            </li>
                         
                             <li className="pcoded-hasmenu">
                                 <Link to='#' >
