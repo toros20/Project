@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import CategoryTable from '../components/CategoryTable'
+import ResultadosAtlas from '../components/ResultadosAtlas'
 
 export default class Atlas extends Component {
 
@@ -52,7 +52,7 @@ export default class Atlas extends Component {
                             {/* Hover table card start */}
                             <div className="card">
                                 <div className="card-header">
-                                <h5>Listado de los Resultados ATLAS</h5>
+                                <h4>Listado de los Resultados ATLAS</h4>
                                 <div><button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i className="icofont icofont-plus m-r-5" />Crear Nuevo Resultado </button></div>
                                     <div className="card-header-right">
                                         <i className="icofont icofont-rounded-down" />
@@ -77,7 +77,7 @@ export default class Atlas extends Component {
                                             <tr>
                                                 <td >{result.code}</td>
                                                 <td >{result.name}</td>
-                                                <td >{result.details}</td>
+                                                <td ></td>
                                                 <td  className="action-icon"> 
                                                     <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
                                                     <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>
@@ -92,7 +92,7 @@ export default class Atlas extends Component {
                                 
                                 {this.state.atlas_resultados.map(result => 
                                    
-                                    <CategoryTable className="mt-3" idCat={result.id} nameCat={result.name} />
+                                    <ResultadosAtlas className="mt-3" codeResultado={result.code} nameResultado={result.name} />
                                     
                                 )}
 
