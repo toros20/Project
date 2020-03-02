@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import ResultadosAtlas from '../components/ResultadosAtlas'
+import AtlasSubAccount from '../components/AtlasSubAccount'
 
 export default class Atlas extends Component {
 
     constructor() {
         super();
         this.state = {
-            atlas_resultados:[],
+            atlas_accounts:[],
         }
     }
 
     async componentDidMount(){
-        const res = await axios.get('http://localhost:4000/api/atlas/resultados');
-        this.setState({atlas_resultados:res.data.atlas_resultados});
+        const res = await axios.get('http://localhost:4000/api/atlas/accounts');
+        this.setState({atlas_accounts:res.data.atlas_accounts});
     }
 
     render() {
@@ -27,8 +27,8 @@ export default class Atlas extends Component {
                             {/* Page-header start */}
                             <div className="page-header mt-5">
                             <div className="page-header-title">
-                                <h4>Gestión de Resultados y Productos ATLAS</h4>
-                                <span>Control y Administración de los Resultados ATLAS</span>
+                                <h4>Gestión de Cuentas ATLAS</h4>
+                                <span>Control y Administración de las Cuentas ATLAS</span>
                             </div>
                             <div className="page-header-breadcrumb">
                                 <ul className="breadcrumb-title">
@@ -52,8 +52,8 @@ export default class Atlas extends Component {
                             {/* Hover table card start */}
                             <div className="card">
                                 <div className="card-header">
-                                <h4>Listado de los Resultados ATLAS</h4>
-                                <div><button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i className="icofont icofont-plus m-r-5" />Crear Nuevo Resultado </button></div>
+                                <h4>Listado de las Cuentas ATLAS</h4>
+                                <div><button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i className="icofont icofont-plus m-r-5" />Crear Nueva Cuenta </button></div>
                                     <div className="card-header-right">
                                         <i className="icofont icofont-rounded-down" />
                                         <i className="icofont icofont-refresh" />
@@ -73,7 +73,7 @@ export default class Atlas extends Component {
                                     </thead>
                                     <tbody>
 
-                                        {this.state.atlas_resultados.map(result => 
+                                        {this.state.atlas_accounts.map(result => 
                                             <tr>
                                                 <td >{result.code}</td>
                                                 <td >{result.name}</td>
@@ -90,11 +90,11 @@ export default class Atlas extends Component {
                                 </div>
                                 </div>
                                 
-                                {this.state.atlas_resultados.map(result => 
+                                {this.state.atlas_accounts.map(result2 => 
                                    
-                                    <ResultadosAtlas className="mt-3" codeResultado={result.code} nameResultado={result.name} />
+                                    <AtlasSubAccount className="mt-3" codeResultado={result2.id} nameResultado={result2.name} />
                                     
-                                )}
+                                )} 
 
                             </div>
                             {/* Hover table card end */}

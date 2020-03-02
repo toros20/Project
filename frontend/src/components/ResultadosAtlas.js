@@ -42,7 +42,7 @@ export default class ResultadosAtlas extends Component {
                                             <tr>
                                                 <td >{Producto.code}</td>
                                                 <td >{Producto.name}</td>
-                                                <td ></td>
+                                                <td style={{whiteSpace:'normal'}} >{Producto.details}</td>
                                                 <td  className="action-icon"> 
                                                     <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
                                                     <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>

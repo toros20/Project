@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-export default class AtlasActividades extends Component {
+export default class AtlasSubAccount extends Component {
 
      constructor() {
         super();
         this.state = {
-            productos_atlas:[]
+            subAccount_atlas:[]
         }
     }
     
     async componentDidMount(){
 
-        const res3 = await axios.get('http://localhost:4000/api/atlas/productos/'+this.props.codeResultado);
-        this.setState({productos_atlas:res3.data.productos_atlas});
+        const res3 = await axios.get('http://localhost:4000/api/atlas/sub_accounts/'+this.props.codeResultado);
+        this.setState({subAccount_atlas:res3.data.sub_accounts}); 
     }
     render() {
         return (
@@ -21,7 +21,7 @@ export default class AtlasActividades extends Component {
                     {/* Hover table card start */}
                     <div className="card">
                         <div className="card-header">
-                            <h4>Actividdes del Producto({this.props.codeResultado}): {this.props.nameResultado} </h4>
+                            <h4>Sub Cuentas de la Cuenta Atlas: {this.props.nameResultado} </h4>
                             <div><button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-modal="modal-13"> <i className="icofont icofont-plus m-r-5" />Nueva Sub-Categoría </button></div>
                         </div>
                         <div  className="card-block table-border-style">
@@ -37,11 +37,11 @@ export default class AtlasActividades extends Component {
                                     </thead>
                                     <tbody>
 
-                                        {this.state.productos_atlas.map(Producto => 
+                                        {this.state.subAccount_atlas.map(SubAccount => 
                                             <tr>
-                                                <td >{Producto.code}</td>
-                                                <td >{Producto.name}</td>
-                                                <td style={{whiteSpace:'normal'}} >{Producto.details}</td>
+                                                <td >{SubAccount.code}</td>
+                                                <td >{SubAccount.name}</td>
+                                                <td style={{whiteSpace:'normal'}} >{SubAccount.details}</td>
                                                 <td  className="action-icon"> 
                                                     <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
                                                     <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>

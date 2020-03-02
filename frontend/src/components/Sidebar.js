@@ -36,6 +36,15 @@ export default class Sidebar extends Component {
                                         </a>
                                     </li> 
                                     </Link>
+                                    <Link to="/atlas_accounts">
+                                    <li className=" ">
+                                        <a href="navbar-light.html">
+                                        <span className="pcoded-micon"><i className="ti-angle-right" /></span>
+                                        <span className="pcoded-mcaret" />
+                                        <span className="pcoded-mtext" data-i18n="nav.navigate.navbar">Cuentas Atlas</span>
+                                        </a>
+                                    </li> 
+                                    </Link>
                                 </ul>
                             </li>
                         

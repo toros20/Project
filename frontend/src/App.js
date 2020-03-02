@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 
 import Atlas from './pages/Atlas'
+import AtlasAccount from './pages/AtlasAccount'
 
 import listBudgets from './components/listBudgets'
 import Navbar from './components/Navbar'
@@ -29,6 +30,7 @@ function App() {
           <Navbar />
           <Sidebar />
             <Route path="/atlas" exact component ={Atlas} />
+            <Route path="/atlas_accounts" exact component ={AtlasAccount} />
             <Route path="/budgets" exact component ={listBudgets} />
             <Route path="/budgets/new" exact component ={BudgetNew} /> 
             <Route path="/budgetline/new" exact component ={BudgetLineNew} /> 
