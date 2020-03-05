@@ -16,6 +16,7 @@ import teamsRoutes from './routes/teams';
 import taskRoutes from './routes/task';
 import accountsRoutes from './routes/accounts';
 import atlasRoutes from './routes/atlas';
+import suppliersRoutes from './routes/suppliers'
 
 //Initialization
 const app = express();
@@ -37,5 +38,6 @@ app.use('/api/teams',teamsRoutes);
 app.use('/api/accounts',accountsRoutes);
 app.use('/api/atlas',atlasRoutes);
 app.use('/api/tasks',taskRoutes); 
+app.use('/api/suppliers',suppliersRoutes); 
 
 export default app;

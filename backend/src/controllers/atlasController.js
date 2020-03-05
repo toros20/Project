@@ -87,4 +87,3 @@ export async function atlas_sub_accounts(req,res){
         }
    
 }
-atlas_sub_accounts

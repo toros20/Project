@@ -38,10 +38,25 @@ export default class TableCost extends Component {
             balance:0.0,
             balance:false,
 
-            categories:[],
-            clasificaciones:[],
-            cuentas:[]
-            
+            /* INICIAL categories:[],
+            clasificaciones:[],*/
+            cuentas:[],
+
+            /****atlas */
+            resultados_atlas:[],
+            result_atlas:'',
+
+            products_atlas:[],
+            product_atlas:'',
+
+            accounts_atlas:[],
+            account_atlas:'',
+
+            sub_accounts_atlas:[],
+            sub_account_atlas:'',
+
+            suppliers:[],
+            supplier:0
          
         }
     }
@@ -57,11 +72,23 @@ export default class TableCost extends Component {
         const res3 = await axios.get('http://localhost:4000/api/projects/');
         this.setState({projects:res3.data.projects});
 
-        const res4 = await axios.get('http://localhost:4000/api/categories/categories_parents/');
-        this.setState({categories:res4.data.categories});
+        /* INICIAL const res4 = await axios.get('http://localhost:4000/api/categories/categories_parents/');
+        this.setState({categories:res4.data.categories}); */
 
         const res6 = await axios.get('http://localhost:4000/api/accounts/');
         this.setState({cuentas:res6.data.cuentas});
+
+        const res_atlas = await axios.get('http://localhost:4000/api/atlas/resultados');
+        this.setState({resultados_atlas:res_atlas.data.atlas_resultados});
+
+        const res_account_atlas = await axios.get('http://localhost:4000/api/atlas/accounts');
+        this.setState({accounts_atlas:res_account_atlas.data.atlas_accounts});
+
+        const res_suppliers = await axios.get('http://localhost:4000/api/suppliers/');
+        this.setState({suppliers:res_suppliers.data.suppliers});
+
+
+        this.setState({project_id: this.props.idProject})
        
 
     }
@@ -82,23 +109,46 @@ export default class TableCost extends Component {
     }
 
     /**********************LLENADO PARA EL SAVE********* */
-    onChanceProject = (e) => {this.setState({project_id: e.target.value})}
-    onChanceClasificacion = async (e) => {
+    //onChanceProject = (e) => {this.setState({project_id: e.target.value})}
+    /* INICIAL onChanceClasificacion = async (e) => {
         this.setState({code: e.target.value});
         const res7 = await axios.get('http://localhost:4000/api/categories/child/'+e.target.value);
         this.setState({name:res7.data.child.name});
-    }
+    } */
+
     onChangeStartDate = (e) => {this.setState({startdate: e.target.value})}
     onChangeEndDate = (e) => {this.setState({enddate: e.target.value})}
     onChanceAccount = (e) => {this.setState({account_id: e.target.value})}
     onChanceBudget = (e) => {this.setState({buddgetstart: e.target.value});this.setState({balance: e.target.value});}
     /**********************fINAL DEL LLENADO PARA EL SAVE********* */
 
-    onChanceCategory = async (e) => {
+   /* ININIAL  onChanceCategory = async (e) => {
         this.setState({category_id: e.target.value });
         const res5 = await axios.get('http://localhost:4000/api/categories/categories_childs/'+e.target.value);
         this.setState({clasificaciones:res5.data.clasificaciones});
+    } */
+
+    onChanceResultAtlas = async (e) => {
+        this.setState({result_atlas: e.target.value });
+        const res_prod_atlas = await axios.get('http://localhost:4000/api/atlas/productos/'+e.target.value);
+        this.setState({products_atlas:res_prod_atlas.data.productos_atlas});
     }
+
+    onChanceProductAtlas = async (e) => {
+        this.setState({product_atlas: e.target.value });
+    }
+
+    onChanceAccountAtlas = async (e) => {
+        this.setState({account_atlas: e.target.value });
+        const res_sub_atlas = await axios.get('http://localhost:4000/api/atlas/sub_accounts/'+e.target.value);
+        this.setState({sub_accounts_atlas:res_sub_atlas.data.sub_accounts});
+
+    }
+
+    onChanceSupplier= async (e) => {
+        this.setState({supplier: e.target.value });
+    }
+    
 
     formatMoney(number) {
         return number.toLocaleString('en-US', { style: 'currency', currency: 'HNL' });
@@ -123,8 +173,10 @@ export default class TableCost extends Component {
             buddgetfinal:this.state.buddgetfinal,
             balance:this.state.balance,
             category_id:this.state.category_id
+
+            /***atlas result_atlas, product_atlas ,account_atlas */
         })
-        window.location.href = 'http://localhost:3000/budgets'
+        window.location.href = 'http://localhost:3000/projects/{this.props.idProject}'
        
     }
 
@@ -185,49 +237,118 @@ export default class TableCost extends Component {
                         <div className="modal-body">
                             
                             <form onSubmit={this.onSubmit}>
-                                <select onChange={this.onChanceProject} name="select" className="form-control mt-3">
+                                {/* <select onChange={this.onChanceProject} name="select" className="form-control mt-3">
                                     <option value="#">Seleccione Proyecto</option>
                                     {
                                         this.state.projects.map(project => 
                                             <option value={project.id}>({project.code})-{project.name} </option>
                                         )
                                     }
+                                </select> */}
+                                <input name="" type="hidden" className="form-control mt-3" value={this.props.idProject} />
+                                <div style={{width:'50%', display:'inline-block'}}>
+                                     {/* Select de Resultados Atlas */}
+                                    <select onChange={this.onChanceResultAtlas} name="select_result_atlas" className="form-control mt-3">
+                                        <option value="#">Seleccione Resultado Atlas</option>
+                                        {
+                                            this.state.resultados_atlas.map(resultado_atlas => 
+                                                <option value={resultado_atlas.code}>({resultado_atlas.code})-{resultado_atlas.name} </option>
+                                            )
+                                        }
+                                    </select>
+                                {/* FIn del Select de Resultados Atlas */}
+                                </div>
 
-                                </select>
+                                <div style={{width:'50%', display:'inline-block'}}>
+                                     {/* Select de Productos Atlas */}
+                                    <select onChange={this.onChanceProductAtlas} name="select_product_atlas" className="form-control mt-3">
+                                        <option value="#">Seleccione Producto Atlas</option>
+                                        {
+                                            this.state.products_atlas.map(product_atlas => 
+                                                <option value={product_atlas.code}>({product_atlas.code})-{product_atlas.name} </option>
+                                            )
+                                        }
+                                    </select>
+                                 {/* FIn del Select de Productos Atlas */}
+                                </div>
+                               
+                                <div style={{width:'50%', display:'inline-block'}}>
+                                     {/* Select de Cuentas Atlas */}
+                                    <select onChange={this.onChanceAccountAtlas} name="select_account_atlas" className="form-control mt-3">
+                                        <option value="#">Seleccione Cuenta Atlas</option>
+                                        {
+                                            this.state.accounts_atlas.map(account_atlas => 
+                                                <option value={account_atlas.id}>({account_atlas.code})-{account_atlas.name} </option>
+                                            )
+                                        }
+                                    </select>
+                                {/* FIn del Select de Cuentas Atlas */}
+                                </div>
 
-                                <select onChange={this.onChanceCategory} name="select" className="form-control mt-3">
+                                <div style={{width:'50%', display:'inline-block'}}>
+                                     {/* Select de Sub-Cuentas Atlas */}
+                                    <select onChange={this.onChanceSubAccountAtlas} name="select_sub_account_atlas" className="form-control mt-3">
+                                        <option value="#">Seleccione Sub-Cuenta Atlas</option>
+                                        {
+                                            this.state.sub_accounts_atlas.map(sub_account_atlas => 
+                                                <option value={sub_account_atlas.code}>({sub_account_atlas.code})-{sub_account_atlas.name} </option>
+                                            )
+                                        }
+                                    </select>
+                                {/* FIn del Select de Sub-Cuentas Atlas */}
+                                </div>
+                               
+                                
+                                {/* <select onChange={this.onChanceCategory} name="select" className="form-control mt-3">
                                     <option value="#">Seleccione Categoría</option>
                                    {  
                                         this.state.categories.map(category => 
                                             <option value={category.code}>({category.code})-{category.name} </option>
                                         )
                                     } 
+                                </select> */}
 
-                                </select>
-
-                                <select onChange={this.onChanceClasificacion} name="select" className="form-control mt-3">
+                                {/* <select onChange={this.onChanceClasificacion} name="select" className="form-control mt-3">
                                     <option value="#">Seleccione Clasificación de Renglón</option>
                                     {  
                                          this.state.clasificaciones.map(clasificacion => 
                                             <option value={clasificacion.code}>({clasificacion.code})-{clasificacion.name} </option>
                                         )
                                     } 
+                                </select> */}
+                                <div style={{width:'50%', display:'inline-block'}} >
+                                    <select onChange={this.onChanceAccount} name="select_account_money" className="form-control mt-3">
+                                        <option value="#">Seleccione Cuenta de Origen</option>
+                                        {  
+                                            this.state.cuentas.map(cuenta => 
+                                                <option value={cuenta.id}>({cuenta.coin}-{cuenta.actualbalance})-{cuenta.name} </option>
+                                            )
+                                        } 
 
-                                </select>
+                                    </select>
+                                    </div>
+                                <div style={{width:'50%', display:'inline-block'}} >
+                                <select onChange={this.onChanceSupplier} name="select_suppliers" className="form-control mt-3">
+                                        <option value="#">Seleccione Beneficiario/Proveedor</option>
+                                        {  
+                                            this.state.suppliers.map(supplier => 
+                                                <option value={supplier.id}>{supplier.contact_name} </option>
+                                            )
+                                        } 
 
-                                <select onChange={this.onChanceAccount} name="select" className="form-control mt-3">
-                                    <option value="#">Seleccione Cuenta de Origen</option>
-                                    {  
-                                         this.state.cuentas.map(cuenta => 
-                                            <option value={cuenta.id}>({cuenta.coin}-{cuenta.actualbalance})-{cuenta.name} </option>
-                                        )
-                                    } 
-
-                                </select>
+                                    </select>
+                                </div>
 
                                 <div className="input-group mt-3">
-                                    <span className="input-group-addon"><i className="icofont icofont-cur-dollar" /></span>
-                                    <input onChange={this.onChanceBudget} type="text" className="form-control" placeholder="Ingrese Prespuesto de Inicio " />
+                                    <textarea placeholder="Breve Descripción para el informe ATLAS" className="form-control" name="details" cols="30" rows="3"></textarea>
+                                </div>
+
+                                <div style={{width:'50%', display:'inline-block'}}>
+                                   
+                                    <input onChange={this.onChanceBudget} type="text" className="form-control" placeholder="Ingrese El valor Solicitado : 0,000.00 " />
+                                </div>
+                                <div style={{width:'50%', display:'inline-block'}} >
+                                    <input className="form-control" onChange={this.onChanceCodigo} type="text" className="form-control" placeholder="Ingrese Codigo de Identificación: 01-101-01 " />
                                 </div>
                                
                                 <div style={{width:'50%', display:'inline-block'}} >
