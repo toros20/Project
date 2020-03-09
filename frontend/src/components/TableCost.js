@@ -300,7 +300,7 @@ export default class TableCost extends Component {
                                         <option value="#">Seleccione Cuenta Atlas</option>
                                         {
                                             this.state.accounts_atlas.map(account_atlas => 
-                                                <option value={account_atlas.id}>({account_atlas.code})-{account_atlas.name} </option>
+                                                <option value={account_atlas.id}>{account_atlas.name} </option>
                                             )
                                         }
                                     </select>
@@ -313,7 +313,7 @@ export default class TableCost extends Component {
                                         <option value="#">Seleccione Sub-Cuenta Atlas</option>
                                         {
                                             this.state.sub_accounts_atlas.map(sub_account_atlas => 
-                                                <option value={sub_account_atlas.code}>({sub_account_atlas.code})-{sub_account_atlas.name} </option>
+                                                <option value={sub_account_atlas.code}>{sub_account_atlas.name} </option>
                                             )
                                         }
                                     </select>
