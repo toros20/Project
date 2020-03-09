@@ -4,8 +4,6 @@ import Person from './Person';
 import Account from './Account';
 import Project from './Project';
 import Category from './Category';
-import Atlas from './Atlas';
-import AtlasAccount from './AtlasAccount';
 
 //import connection object
 import { sequelize } from '../database/database';

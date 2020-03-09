@@ -1,9 +1,10 @@
-import Budgetline from '../models/Budgetline'
-import Category from '../models/Category'
-import Person from '../models/Person'
-import Project from '../models/Project'
-import Budget from '../models/Budget'
+import Budgetline from '../models/Budgetline';
+import Category from '../models/Category';
+import Person from '../models/Person';
+import Project from '../models/Project;'
+import Budget from '../models/Budget';
 import sequelize from 'sequelize';
+import BudgetLineAtlas from '../models/BudgetLineAtlas';
 
 //funcion para obtener todos los renglones presupuestario de este projecto id
 //nos ayuda a calcular los totales de presupuestos para las RowCardProjects
@@ -223,4 +224,105 @@ export async function AprobarBudgetLinesbyId(req, res){
     
 }
 
+
+/// CREACION DE RENGLON PPRESUPUESTARIO MODALIDAD ATLAS/////
+//funion para crear nuevos renglones presupuestarios en la tabla budgetlines_atlas
+export async function createBudgetLines(req, res){
+
+    const {code_resultado , code_producto,code_activity,code_atlas,code_sub_atlas,code, date_start , date_end , account_id , project_id ,user_id,supplier_id, buddgetstart , buddgeupdate , buddgetfinal , balance , returns , deviation , status , approval , approvalby_id, dateapproval } = req.body;
+    try {
+        let newBudgetLine = await BudgetLineAtlas.create({
+            code_resultado,
+            code_producto,
+            code_activity,
+            code_atlas,
+            code_sub_atlas,
+            code ,
+            date_start ,
+            date_end ,
+            account_id ,
+            project_id,
+            user_id ,
+            supplier_id,
+            buddgetstart ,
+            buddgeupdate ,
+            buddgetfinal ,
+            balance ,
+            returns ,
+            deviation ,
+            status ,
+            approval ,
+            approvalby_id,
+            dateapproval
+            
+        },{
+            fields:['code_resultado' , 'code_producto' , 'code_activity' , 'code_atlas' ,'code_sub_atlas' , 'code' , 'date_start' , 'date_end' , 'account_id', 'project_id' , 'user_id' , 'supplier_id' , 'buddgetstart' , 'buddgeupdate' , 'buddgetfinal' , 'balance' , 'returns' , 'deviation' , 'status' , 'approval' , 'approvalby_id', 'dateapproval']
+        });
+
+        if (newBudgetLine){
+
+            //acutualizamos la base de datos , el balance y el budget star, ya que solo es soliictado
+            try {
+
+                 //buscamos el projecto y el presupuesto al que pertenece este renglon.
+                const project_budget =await  Project.findOne({
+                    where:{
+                        id:project_id
+                    },
+                    include:[Budget] 
+                });
+            
+                //obtenemos el presupuesto inicial y el balance actual de la base de datos
+                const Budgetstart_old = project_budget.budget.buddgetstart;
+                const balance_old = project_budget.budget.balance;
+            
+                //calculamos el nuevo balance y budgetstart
+                const newBudgetStar = parseFloat(Budgetstart_old) + parseFloat(buddgetstart);
+                const newBalance = parseFloat(balance_old) + parseFloat(balance);
+
+                const result_update = await Budget.update({
+                    buddgetstart:newBudgetStar,
+                    balance:newBalance
+                },
+                    {
+                        where:{id:project_budget.budget.id}
+                    }
+                )
+
+                if(result_update){
+                    res.json({
+                        message:"BudgetStarNEW Atlas Actualizado Satifactoriamente"
+                    })
+                }
+                
+            }catch(erro){
+                console.log(erro);
+                return res.json({
+                    message: 'Something Wrong in Update BudgetLine Atlas',
+                    data:{}
+                });
+            }
+           
+
+            return res.json({
+                message:"Renglon Presupuestario Atlas Creado Exitosamente",
+                data:newBudgetLine
+            });
+
+        }else{
+            return res.json({
+                message:"No se Pudo Crear el Nuevo Renglon Presupuestario ATLAS",
+                data:{}
+            });
+        }
+
+    } catch (error) {
+       console.log(error);
+        res.status(500).json({
+                message:"Error al crar nuevo Renglon Presupuestario Atlas",
+                data:{}
+        });
+    }
+
+}
 
