@@ -227,7 +227,7 @@ export async function AprobarBudgetLinesbyId(req, res){
 
 /// CREACION DE RENGLON PPRESUPUESTARIO MODALIDAD ATLAS/////
 //funion para crear nuevos renglones presupuestarios en la tabla budgetlines_atlas
-export async function createBudgetLines(req, res){
+export async function createBudgetLinesAtlas(req, res){
 
     const {code_resultado , code_producto,code_activity,code_atlas,code_sub_atlas,code, date_start , date_end , account_id , project_id ,user_id,supplier_id, buddgetstart , buddgeupdate , buddgetfinal , balance , returns , deviation , status , approval , approvalby_id, dateapproval } = req.body;
     try {
