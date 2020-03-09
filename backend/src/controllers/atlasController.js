@@ -11,7 +11,10 @@ export async function atlas_resultados(req,res){
            
             where:{
                 code_atlas:'0'
-            }
+            },
+            order: [
+                ['id', 'ASC']
+            ]
         });
         res.json({
             atlas_resultados
@@ -21,7 +24,7 @@ export async function atlas_resultados(req,res){
         console.log("ERROR AL QUERE LISTAR La Categorias de resultados de AtLAS:"+error);
     }
    
-} 
+}  
 
 //codigo para obtener los productos dado el codigo de resultado atlas
 export async function atlas_productos(req,res){
@@ -33,7 +36,11 @@ export async function atlas_productos(req,res){
                
                 where:{
                     code_atlas:id
-                } 
+                } ,
+                
+            order: [
+                ['id', 'ASC']
+            ]
             });
             res.json({
                 productos_atlas
@@ -54,7 +61,10 @@ export async function atlas_accounts(req,res){
            
             where:{
                 code_atlas:'Atlas'
-            }
+            },
+            order: [
+                ['id', 'ASC']
+            ]
         });
         res.json({
             atlas_accounts

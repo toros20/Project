@@ -49,6 +49,9 @@ export default class TableCost extends Component {
             products_atlas:[],
             product_atlas:'',
 
+            activities_atlas:[],
+            activyty_atlas:0,
+
             accounts_atlas:[],
             account_atlas:'',
 
@@ -136,6 +139,12 @@ export default class TableCost extends Component {
 
     onChanceProductAtlas = async (e) => {
         this.setState({product_atlas: e.target.value });
+        const res_activity_atlas = await axios.get('http://localhost:4000/api/atlas/productos/'+e.target.value);
+        this.setState({activities_atlas:res_activity_atlas.data.productos_atlas});
+    }
+
+    onChanceActivityAtlas = async (e) => {
+        this.setState({activity_atlas: e.target.value });
     }
 
     onChanceAccountAtlas = async (e) => {
@@ -266,6 +275,19 @@ export default class TableCost extends Component {
                                         {
                                             this.state.products_atlas.map(product_atlas => 
                                                 <option value={product_atlas.code}>({product_atlas.code})-{product_atlas.name} </option>
+                                            )
+                                        }
+                                    </select>
+                                 {/* FIn del Select de Productos Atlas */}
+                                </div>
+
+                                <div>
+                                     {/* Select de Productos Atlas */}
+                                    <select onChange={this.onChanceActivityAtlas} name="select_activity_atlas" className="form-control mt-3">
+                                        <option value="#">Seleccione Actividad Atlas</option>
+                                        {
+                                            this.state.activities_atlas.map(activity_atlas => 
+                                                <option value={activity_atlas.code}>({activity_atlas.code})-{activity_atlas.name} </option>
                                             )
                                         }
                                     </select>
