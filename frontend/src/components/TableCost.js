@@ -25,7 +25,7 @@ export default class TableCost extends Component {
             code:'',
             name:'',
             project_id:0,
-            category_id:0,
+            //category_id:0,
             user_id:1,
             status:'Solicitado',
             supplier_id : 1,
@@ -36,7 +36,6 @@ export default class TableCost extends Component {
             buddgeupdate:0.0,
             buddgetfinal:0.0,
             balance:0.0,
-            balance:false,
 
             /* INICIAL categories:[],
             clasificaciones:[],*/
@@ -50,7 +49,7 @@ export default class TableCost extends Component {
             product_atlas:'',
 
             activities_atlas:[],
-            activyty_atlas:0,
+            activity_atlas:0,
 
             accounts_atlas:[],
             account_atlas:'',
@@ -59,7 +58,8 @@ export default class TableCost extends Component {
             sub_account_atlas:'',
 
             suppliers:[],
-            supplier:0
+            supplier:0,
+            details:''
          
         }
     }
@@ -121,7 +121,6 @@ export default class TableCost extends Component {
 
     onChangeStartDate = (e) => {this.setState({startdate: e.target.value})}
     onChangeEndDate = (e) => {this.setState({enddate: e.target.value})}
-    onChanceAccount = (e) => {this.setState({account_id: e.target.value})}
     onChanceBudget = (e) => {this.setState({buddgetstart: e.target.value});this.setState({balance: e.target.value});}
     /**********************fINAL DEL LLENADO PARA EL SAVE********* */
 
@@ -154,10 +153,25 @@ export default class TableCost extends Component {
 
     }
 
+    onChanceSubAccountAtlas= async (e) => {
+        this.setState({sub_account_atlas: e.target.value });
+    }
+
     onChanceSupplier= async (e) => {
         this.setState({supplier: e.target.value });
     }
-    
+
+    onChanceDetails= async (e) => {
+        this.setState({details: e.target.value });
+    }
+
+    onChanceAccount= async (e) => {
+        this.setState({account_id: e.target.value });
+    }
+
+    onChanceCode= async (e) => {
+        this.setState({code: e.target.value });
+    }
 
     formatMoney(number) {
         return number.toLocaleString('en-US', { style: 'currency', currency: 'HNL' });
@@ -166,16 +180,23 @@ export default class TableCost extends Component {
     //codigo para crear un nuevo renglon presupuestario
     onSubmit  = async e =>{
         e.preventDefault();
-        const res = await axios.post('http://localhost:4000/api/budgetlines',{
+        const res = await axios.post('http://localhost:4000/api/budgetlines/budgetlineatlas',{
+            code_resultado:this.state.result_atlas,
+            code_producto:this.state.product_atlas,
+            code_activity:this.state.activity_atlas,
+            code_atlas:this.state.account_atlas,
+            code_sub_atlas:this.state.sub_account_atlas,
+            
             code:this.state.code,
-            name:this.state.name,
+            details:this.state.details,
+           // name:this.state.name,
             status:this.state.status,
-            project_id:this.state.project_id,
+            //project_id:this.state.project_id,
+            project_id:this.props.idProject,
             user_id:this.state.user_id,
-            status:this.state.status,
-            supplier_id : this.state.supplier_id,
-            startdate:this.state.startdate,
-            enddate:this.state.enddate,
+            supplier_id : this.state.supplier,
+            date_start:this.state.startdate,
+            date_end:this.state.enddate,
             account_id:this.state.account_id,
             buddgetstart:this.state.buddgetstart,
             buddgeupdate:this.state.buddgeupdate,
@@ -362,15 +383,14 @@ export default class TableCost extends Component {
                                 </div>
 
                                 <div className="input-group mt-3">
-                                    <textarea placeholder="Breve Descripción para el informe ATLAS" className="form-control" name="details" cols="30" rows="3"></textarea>
+                                    <textarea onChange={this.onChanceDetails} placeholder="Breve Descripción para el informe ATLAS" className="form-control" name="details" cols="30" rows="3"></textarea>
                                 </div>
 
                                 <div style={{width:'50%', display:'inline-block'}}>
-                                   
-                                    <input onChange={this.onChanceBudget} type="text" className="form-control" placeholder="Ingrese El valor Solicitado : 0,000.00 " />
+                                    <input name="buddgetstart" onChange={this.onChanceBudget} type="text" className="form-control" placeholder="Ingrese El valor Solicitado : 0,000.00 " />
                                 </div>
                                 <div style={{width:'50%', display:'inline-block'}} >
-                                    <input className="form-control" onChange={this.onChanceCodigo} type="text" className="form-control" placeholder="Ingrese Codigo de Identificación: 01-101-01 " />
+                                    <input name="code" className="form-control" onChange={this.onChanceCode} type="text" className="form-control" placeholder="Ingrese Codigo de Identificación: 01-101-01 " />
                                 </div>
                                
                                 <div style={{width:'50%', display:'inline-block'}} >

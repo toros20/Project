@@ -3,7 +3,6 @@ import Sequelize from 'sequelize';
 import Person from './Person';
 import Account from './Account';
 import Project from './Project';
-import Category from './Category';
 
 //import connection object
 import { sequelize } from '../database/database';
@@ -37,6 +36,9 @@ const BudgetLineAtlas = sequelize.define('budgetlines_atlas',{
     },
     code:{
         type: Sequelize.STRING, 
+    },
+    details:{
+        type: Sequelize.TEXT, 
     },
     
     date_start:{
