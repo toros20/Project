@@ -358,15 +358,24 @@ export default class TableCost extends Component {
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>  
-                                                            <form >
+                                                            <form method="post" enctype="multipart/form-data">
 
                                                                 <div class="modal-body">                                                                
-                                                                    <select onChange={this.onchangeSelectAprobar} name="select" className="form-control mt-3">
+                                                                    <div >
+                                                                        <input type="file" name="files"></input>
+                                                                    </div>
+                                                                    <div >
+                                                                        <input name="Nombre de Archivo" onChange={this.onChanceArchivo} type="text" className="form-control" placeholder="Ingrese El valor Solicitado : 0,000.00 " />
+                                                                    </div>
+                                                                    <div >
+                                                                    <select name="fase" className="form-control mt-3">
                                                                             <option value="0">Seleccion Opción</option>
-                                                                            <option value="1">SI APROBAR</option>
-                                                                            <option value="2">NO APROBAR</option>
+                                                                            <option value="1">Fase 1</option>
+                                                                            <option value="2">Fase 2</option>
+                                                                            <option value="3">Fase 3</option>
                                                                     </select>
-                                                                   
+                                                                    </div>
+                                                                    
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
