@@ -82,7 +82,7 @@ export default class RowCardsProjects extends Component {
                     <div className="card-header">
                         <div className="card-header-left">
                         <h5>Presupuesto Disponible</h5>
-                        <p className="p-t-10 m-b-0 text-muted">Total del presupuesto que está disponible</p>
+                        <p className="p-t-10 m-b-0 text-muted">Total del presupuesto disponible</p>
                         </div>
                     </div>
                     <div className="card-block">

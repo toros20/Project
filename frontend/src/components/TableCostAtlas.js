@@ -19,6 +19,7 @@ export default class TableCost extends Component {
             porcentaje_disponible:0.0,
             porcentaje_ejecutado:0.0,
             porcentaje_rembolsos:0.0,
+            total_solicitado:0.0,
 
             //para el modal
             code:'',
@@ -31,9 +32,9 @@ export default class TableCost extends Component {
             startdate:'',
             enddate:'',
             account_id:0,
-            buddgetstart:0.0,
-            buddgeupdate:0.0,
-            buddgetfinal:0.0,
+            budgetstart:0.0,
+            budgeupdate:0.0,
+            budgetfinal:0.0,
             balance:0.0,
 
             /* INICIAL categories:[],
@@ -58,7 +59,10 @@ export default class TableCost extends Component {
 
             suppliers:[],
             supplier:0,
-            details:''
+            details:'',
+
+            aprobar:0
+
          
         }
     }
@@ -89,24 +93,31 @@ export default class TableCost extends Component {
         const res_suppliers = await axios.get('http://localhost:4000/api/suppliers/');
         this.setState({suppliers:res_suppliers.data.suppliers});
 
-
         this.setState({project_id: this.props.idProject})
        
-
     }
 
     calculo(){ // para realizar el calculo de la suma de presupuestos
 
-        this.state.total_inicial=0.0;this.state.total_ejecutado=0.0; this.state.total_disonible=0.0;
+        this.state.total_inicial=0.0;this.state.total_ejecutado=0.0; this.state.total_disponible=0.0; this.state.total_solicitado =0.0;
         for (let index = 0; index < this.state.budgetLinesAtlas.length; index++) {
-            this.state.total_inicial= this.state.total_inicial + this.state.budgetLinesAtlas[index].buddgetstart;
-            this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLinesAtlas[index].buddgetfinal;
-            this.state.total_disponible= this.state.total_disponible + this.state.budgetLinesAtlas[index].balance;
+            
+            
+            if (this.state.budgetLinesAtlas[index].status == 'Solicitado') {
+               this.state.total_solicitado = this.state.total_solicitado + this.state.budgetLinesAtlas[index].budgetstart;
+              
+            }
+            if (this.state.budgetLinesAtlas[index].status == 'Aprobado') {
+              this.state.total_inicial +=  this.state.budgetLinesAtlas[index].budgetstart;
+              this.state.total_ejecutado +=  this.state.budgetLinesAtlas[index].budgetfinal;
+              this.state.total_disponible += this.state.budgetLinesAtlas[index].balance;
+            }
+            
         }
 
-        this.porcentaje_ejecutado = (this.state.total_ejecutado * 100 )/this.state.total_inicial;
-        this.porcentaje_disponible = (this.state.total_disonible * 100 )/this.state.total_inicial;
-        this.porcentaje_rembolsos = (this.state.total_rembolsos * 100 )/this.state.total_inicial;
+       this.state.porcentaje_ejecutado = (this.state.total_ejecutado * 100 )/this.state.total_inicial;
+       this.state.porcentaje_disponible = (this.state.total_disponible * 100 )/this.state.total_inicial;
+       this.state.porcentaje_rembolsos = (this.state.total_rembolsos * 100 )/this.state.total_inicial;
 
     }
 
@@ -120,7 +131,7 @@ export default class TableCost extends Component {
 
     onChangeStartDate = (e) => {this.setState({startdate: e.target.value})}
     onChangeEndDate = (e) => {this.setState({enddate: e.target.value})}
-    onChanceBudget = (e) => {this.setState({buddgetstart: e.target.value});this.setState({balance: e.target.value});}
+    onChanceBudget = (e) => {this.setState({budgetstart: e.target.value});this.setState({balance: e.target.value});}
     /**********************fINAL DEL LLENADO PARA EL SAVE********* */
 
    /* ININIAL  onChanceCategory = async (e) => {
@@ -172,11 +183,23 @@ export default class TableCost extends Component {
         this.setState({code: e.target.value });
     }
 
+    onchangeSelectAprobar= async (e) => {
+        this.setState({aprobar: e.target.value });
+    }
+
     formatMoney(number) {
         return number.toLocaleString('en-US', { style: 'currency', currency: 'HNL' });
     }
-    
-    //codigo para crear un nuevo renglon presupuestario
+
+    onClickAprobar = async (id) =>{
+        //e.preventDefault();
+        if ( await axios.post('http://localhost:4000/api/budgetlines/aprobar_atlas/'+id+'/'+this.state.aprobar)){
+            window.location.href = 'http://localhost:3000/project/'+this.props.idProject
+        }
+        
+        
+    }
+        //codigo para crear un nuevo renglon presupuestario
     onSubmit  = async e =>{
         e.preventDefault();
         const res = await axios.post('http://localhost:4000/api/budgetlines/budgetlineatlas',{
@@ -197,9 +220,9 @@ export default class TableCost extends Component {
             date_start:this.state.startdate,
             date_end:this.state.enddate,
             account_id:this.state.account_id,
-            budgetstart:this.state.buddgetstart,
-            budgeupdate:this.state.buddgeupdate,
-            budgetfinal:this.state.buddgetfinal,
+            budgetstart:this.state.budgetstart,
+            budgeupdate:this.state.budgeupdate,
+            budgetfinal:this.state.budgetfinal,
             balance:this.state.balance,
             category_id:this.state.category_id
 
@@ -219,11 +242,11 @@ export default class TableCost extends Component {
                 <RowCardsProjects 
                     inicial={this.state.total_inicial} 
                     ejecutado={this.state.total_ejecutado}
-                    disponible={this.state.total_disonible}
+                    disponible={this.state.total_disponible}
                     rembolsos={this.state.total_rembolsos}
-                    porcentaje_ejecutado={this.porcentaje_ejecutado}
-                    porcentaje_disponible={this.porcentaje_disponible}
-                    porcentaje_rembolsos={this.porcentaje_rembolsos}
+                    porcentaje_ejecutado={this.state.porcentaje_ejecutado}
+                    porcentaje_disponible={this.state.porcentaje_disponible}
+                    porcentaje_rembolsos={this.state.porcentaje_rembolsos}
                 />
 
                 {/* Page body start */}
@@ -249,7 +272,7 @@ export default class TableCost extends Component {
                                         <th>Sub-Cuenta Atlas</th>
                                         <th>Inicial</th>
                                         <th>Ejecutado</th>
-                                        <th>Discponible</th>
+                                        <th>Disponible</th>
                                         <th>Estado</th>
                                         <th>Rembolsar</th>
                                         <th>Archivos</th>
@@ -268,7 +291,6 @@ export default class TableCost extends Component {
                                                 </td>
                                                 <td className="pro-name">
                                                     <h6>{budgetLinesAtlas.atlas_account.name}</h6>
-                                                 
                                                 </td>
                                                 <td>
                                                     <label className="text-info"> {this.formatMoney( budgetLinesAtlas.budgetstart)}</label>
@@ -316,11 +338,39 @@ export default class TableCost extends Component {
                                                                             <option value="1">SI APROBAR</option>
                                                                             <option value="2">NO APROBAR</option>
                                                                     </select>
-
+                                                                   
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
-                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light ">Guardar</button>
+                                                                    <button type="button" onClick={ () =>this.onClickAprobar(budgetLinesAtlas.id )} class="btn btn-primary waves-effect waves-light ">Guardar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id={'archivos_'+budgetLinesAtlas.id} tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">{budgetLinesAtlas.name}-{this.formatMoney(budgetLinesAtlas.budgetstart)} </h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>  
+                                                            <form >
+
+                                                                <div class="modal-body">                                                                
+                                                                    <select onChange={this.onchangeSelectAprobar} name="select" className="form-control mt-3">
+                                                                            <option value="0">Seleccion Opción</option>
+                                                                            <option value="1">SI APROBAR</option>
+                                                                            <option value="2">NO APROBAR</option>
+                                                                    </select>
+                                                                   
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                                                                    <button type="button" onClick={ () =>this.onClickAprobar(budgetLinesAtlas.id )} class="btn btn-primary waves-effect waves-light ">Guardar</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -369,9 +419,7 @@ export default class TableCost extends Component {
                                             <h6>Total de Prespuesto APROBADO</h6>
                                             <span>Suma de los Totales</span>
                                         </td>
-                                        <td align="center">   
-                                            <label >---</label>
-                                        </td>
+                                        
                                         <td>
                                             <label className="text-info">{this.formatMoney(this.state.total_inicial)}</label>
                                         </td>
@@ -404,11 +452,9 @@ export default class TableCost extends Component {
                                             <h6>Total de Prespuesto SOLICITADO</h6>
                                             <span>Suma de los Totales</span>
                                         </td>
-                                        <td align="center">  
-                                            <label >---</label>
-                                        </td>
+                                        
                                         <td>
-                                            {/* <label>{this.formatMoney(this.state.total_solicitado)}</label> */}
+                                             <label>{this.formatMoney(this.state.total_solicitado)}</label> 
                                         </td>
                                         <td align="center">
                                             <label className="text-info">---</label>

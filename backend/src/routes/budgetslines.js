@@ -6,9 +6,10 @@ import {createBudgetLines,
     budgetLinesCatgoriesByProjectId,
     budgetLinesbyProjectIdCategories,
     AprobarBudgetLinesbyId,
-    
+
     createBudgetLinesAtlas,
-    budgetLinesAtlasbyProjectId} 
+    budgetLinesAtlasbyProjectId,
+    AprobarBudgetLinesAtlasbyId} 
 from '../controllers/budgetLinesController'
 
 // ruta /api/budgetlines/project/:id -> para buscar los renglones de cada projecto
@@ -20,6 +21,9 @@ router.post('/project/category/:idPro/:idCat',budgetLinesbyProjectIdCategories);
 
 // ruta para actualizar el status del budget line por ser aprobado
 router.post('/aprobar/:id/:status',AprobarBudgetLinesbyId);
+
+// ruta para actualizar el status del budget line por ser aprobado
+router.post('/aprobar_atlas/:id/:status',AprobarBudgetLinesAtlasbyId);
 
 
 

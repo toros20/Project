@@ -372,3 +372,47 @@ export async function budgetLinesAccountsAtlasByProjectId(req,res){
     }
    
 }
+//funcion para aprobar un budgetLineAtlas
+export async function AprobarBudgetLinesAtlasbyId(req, res){
+
+    let Nuevo_status = '';
+
+    const { id, status } = req.params;
+    console.log("VALOR DE ID:"+id);
+    console.log("VALOR DE STATUS:"+status);
+    if (status!=0) {
+        
+        if (status=="1") {
+            Nuevo_status ="Aprobado";
+        }
+        if(status=="2") {
+            Nuevo_status ="No Aprobado";
+        }
+
+        try { 
+            const result = await BudgetLineAtlas.update({
+                status:Nuevo_status
+            },
+            {
+                where:{id}
+            }
+            );
+    
+            if(result){
+                res.json({
+                    message:"Actualizado Satifactoriamente"
+                })
+            }
+              
+        }catch(erro){
+            console.log(erro);
+            return res.json({
+                message: 'Something Wrong in Update',
+                data:{}
+            });
+        }
+        
+    }
+   
+    
+}
