@@ -3,6 +3,7 @@ import Sequelize from 'sequelize';
 import Person from './Person';
 import Account from './Account';
 import Project from './Project';
+import AtlasAccount from './AtlasAccount';
 
 //import connection object
 import { sequelize } from '../database/database';
@@ -27,12 +28,22 @@ const BudgetLineAtlas = sequelize.define('budgetlines_atlas',{
         allowNull: false
     },
     code_atlas:{
-        type: Sequelize.STRING, 
-        allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: AtlasAccount,
+          key: 'id',
+         }
     },
     code_sub_atlas:{
-        type: Sequelize.STRING, 
-        allowNull: false
+        /*type: Sequelize.STRING, 
+        allowNull: false*/
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: AtlasAccount,
+          key: 'id',
+         }
     },
     code:{
         type: Sequelize.STRING, 
@@ -80,15 +91,15 @@ const BudgetLineAtlas = sequelize.define('budgetlines_atlas',{
           key: 'id',
          }
     },
-    buddgetstart:{
+    budgetstart:{
         type:Sequelize.DOUBLE,
         allowNull: false,
     },
-    buddgeupdate:{
+    budgeupdate:{
         type:Sequelize.DOUBLE,
         allowNull: false,
     },
-    buddgetfinal:{
+    budgetfinal:{
         type:Sequelize.DOUBLE,
         allowNull: false,
     },
@@ -135,6 +146,10 @@ const BudgetLineAtlas = sequelize.define('budgetlines_atlas',{
 
 BudgetLineAtlas.belongsTo(Project, {foreignKey: 'project_id'});
 BudgetLineAtlas.belongsTo(Person, {foreignKey: 'supplier_id'});
+//BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas'});
+BudgetLineAtlas.belongsTo(AtlasAccount,  {foreignKey: 'code_sub_atlas'});
+//BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas', targetKey: 'code'});
+//BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas'});
 //BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
 //Budget.hasMany(Project);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});

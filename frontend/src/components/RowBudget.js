@@ -33,7 +33,6 @@ export default class RowBudget extends Component {
         return number.toLocaleString('en-US', { style: 'currency', currency: 'HNL' });
     }
       
-      //obtener la eleccion sobre aprobar o no el budgetline 1=si, 2 = NO
     onchangeSelectAprobar = (e) => {this.setState({aprobar: e.target.value})}
 
     onSubmitAprobar = async (budgetLine_id) =>{

@@ -60,7 +60,7 @@ export async function atlas_accounts(req,res){
         const atlas_accounts =await  AtlasAccount.findAll({
            
             where:{
-                code_atlas:'Atlas'
+                code_atlas:'0'
             },
             order: [
                 ['id', 'ASC']

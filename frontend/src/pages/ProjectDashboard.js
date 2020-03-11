@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import TableCost from '../components/TableCost'
+//import TableCost from '../components/TableCost'
+import TableCostAtlas from '../components/TableCostAtlas'
 import {Link} from 'react-router-dom'
 
 export default class ProjectDashboard extends Component {
@@ -31,7 +32,8 @@ export default class ProjectDashboard extends Component {
                                         </ul>
                                     </div>
                                  </div>
-                                <TableCost idProject={this.props.match.params.id} />
+                              
+                                 <TableCostAtlas idProject={this.props.match.params.id} />
                             </div>
                         </div>
                     </div>

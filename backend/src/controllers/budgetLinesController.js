@@ -5,6 +5,7 @@ import Project from '../models/Project';
 import Budget from '../models/Budget';
 import sequelize from 'sequelize';
 import BudgetLineAtlas from '../models/BudgetLineAtlas';
+import AtlasAccount from '../models/AtlasAccount';
 
 //funcion para obtener todos los renglones presupuestario de este projecto id
 //nos ayuda a calcular los totales de presupuestos para las RowCardProjects
@@ -229,7 +230,7 @@ export async function AprobarBudgetLinesbyId(req, res){
 //funion para crear nuevos renglones presupuestarios en la tabla budgetlines_atlas
 export async function createBudgetLinesAtlas(req, res){
 
-    const {code_resultado , code_producto,code_activity,code_atlas,code_sub_atlas,code,details, date_start , date_end , account_id , project_id ,user_id,supplier_id, buddgetstart , buddgeupdate , buddgetfinal , balance , returns , deviation , status , approval , approvalby_id, dateapproval } = req.body;
+    const {code_resultado , code_producto,code_activity,code_atlas,code_sub_atlas,code,details, date_start , date_end , account_id , project_id ,user_id,supplier_id, budgetstart , budgeupdate , budgetfinal , balance , returns , deviation , status , approval , approvalby_id, dateapproval } = req.body;
     try {
         let newBudgetLineAtlas = await BudgetLineAtlas.create({
             code_resultado,
@@ -245,9 +246,9 @@ export async function createBudgetLinesAtlas(req, res){
             project_id,
             user_id ,
             supplier_id,
-            buddgetstart ,
-            buddgeupdate ,
-            buddgetfinal ,
+            budgetstart ,
+            budgeupdate ,
+            budgetfinal ,
             balance ,
             returns ,
             deviation ,
@@ -257,7 +258,7 @@ export async function createBudgetLinesAtlas(req, res){
             dateapproval
             
         },{
-            fields:['code_resultado' , 'code_producto' , 'code_activity' , 'code_atlas' ,'code_sub_atlas' , 'code' ,'details', 'date_start' , 'date_end' , 'account_id', 'project_id' , 'user_id' , 'supplier_id' , 'buddgetstart' , 'buddgeupdate' , 'buddgetfinal' , 'balance' , 'returns' , 'deviation' , 'status' , 'approval' , 'approvalby_id', 'dateapproval']
+            fields:['code_resultado' , 'code_producto' , 'code_activity' , 'code_atlas' ,'code_sub_atlas' , 'code' ,'details', 'date_start' , 'date_end' , 'account_id', 'project_id' , 'user_id' , 'supplier_id' , 'budgetstart' , 'budgeupdate' , 'budgetfinal' , 'balance' , 'returns' , 'deviation' , 'status' , 'approval' , 'approvalby_id', 'dateapproval']
         });
 
         if (newBudgetLineAtlas){
@@ -274,11 +275,11 @@ export async function createBudgetLinesAtlas(req, res){
                 });
             
                 //obtenemos el presupuesto inicial y el balance actual de la base de datos
-                const Budgetstart_old = project_budget.budget.buddgetstart;
+                const Budgetstart_old = project_budget.budget.budgetstart;
                 const balance_old = project_budget.budget.balance;
             
                 //calculamos el nuevo balance y budgetstart
-                const newBudgetStar = parseFloat(Budgetstart_old) + parseFloat(buddgetstart);
+                const newBudgetStar = parseFloat(Budgetstart_old) + parseFloat(budgetstart);
                 const newBalance = parseFloat(balance_old) + parseFloat(balance);
 
                 const result_update = await Budget.update({
@@ -326,4 +327,48 @@ export async function createBudgetLinesAtlas(req, res){
     }
 
 }
+//funcion para obtener todos los renglones presupuestarios atlas de este projecto id
+//nos ayuda a calcular los totales de presupuestos para las RowCardProjects
+export async function budgetLinesAtlasbyProjectId(req,res){
+    const { id } = req.params;
+    try {
+       
+        const  budgetLines_atlas =await  BudgetLineAtlas.findAll({
+            include: [ Person, AtlasAccount ],
+            order: [['id', 'ASC']],
+            where:{
+                project_id:id
+            }
+        });
+        res.json({
+            budgetLines_atlas
+        })
+      
+    } catch (error) {
+        console.log("ERROR AL QUERE LISTAR Budgetline-Atlas:"+error);
+    }
+   
+} 
 
+//Funcion para obtener los diferentes id de las categorias Atlas de los budgetlines
+//nos ayuda en generar los TableCostAtlas
+export async function budgetLinesAccountsAtlasByProjectId(req,res){
+    const { id } = req.params;
+    try {
+       
+    const  budgetAccountAtlas =await  BudgetlineAtlas.findAll({
+     
+        attributes: [ [sequelize.fn('DISTINCT', sequelize.col('code_atlas')), 'code_atlas'] ],
+        where:{
+            project_id:id
+        }
+    });
+    res.json({
+        budgetAccountAtlas
+    })
+      
+    } catch (error) {
+        console.log("ERROR AL QUERE LISTAR BudgetlineCategories:"+error);
+    }
+   
+}

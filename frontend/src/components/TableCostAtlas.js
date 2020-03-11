@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import RowCardsProjects from '../components/RowCardsProjects'
-import RowBudget from '../components/RowBudget'
 
 export default class TableCost extends Component {
     
     constructor() {
         super();
         this.state = {
-            budgetLines:[],
+            budgetLinesAtlas:[],
             budgetLinesCat:[],
             projects:[],
             
-            total_disonible:0.0,
+            total_disponible:0.0,
             total_ejecutado:0.0,
             total_inicial:0.0,
             total_rembolsos:0.0,
@@ -66,11 +65,11 @@ export default class TableCost extends Component {
     
     async componentDidMount(){
 
-        const res = await axios.post('http://localhost:4000/api/budgetlines/project/'+this.props.idProject);
-        this.setState({budgetLines:res.data.budgetLines});
+        const res = await axios.post('http://localhost:4000/api/budgetlines/atlas/project/'+this.props.idProject);
+        this.setState({budgetLinesAtlas:res.data.budgetLines_atlas});
 
-        const res2 = await axios.post('http://localhost:4000/api/budgetlines/cat_project/'+this.props.idProject);
-        this.setState({budgetLinesCat:res2.data.budgetCategories});
+        /*const res2 = await axios.post('http://localhost:4000/api/budgetlines/atlas/cat_project/'+this.props.idProject);
+        this.setState({budgetLinesCat:res2.data.budgetCategories}); */
 
         const res3 = await axios.get('http://localhost:4000/api/projects/');
         this.setState({projects:res3.data.projects});
@@ -93,15 +92,16 @@ export default class TableCost extends Component {
 
         this.setState({project_id: this.props.idProject})
        
+
     }
 
     calculo(){ // para realizar el calculo de la suma de presupuestos
 
         this.state.total_inicial=0.0;this.state.total_ejecutado=0.0; this.state.total_disonible=0.0;
-        for (let index = 0; index < this.state.budgetLines.length; index++) {
-            this.state.total_inicial= this.state.total_inicial + this.state.budgetLines[index].buddgetstart;
-            this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLines[index].buddgetfinal;
-            this.state.total_disonible= this.state.total_disonible + this.state.budgetLines[index].balance;
+        for (let index = 0; index < this.state.budgetLinesAtlas.length; index++) {
+            this.state.total_inicial= this.state.total_inicial + this.state.budgetLinesAtlas[index].buddgetstart;
+            this.state.total_ejecutado= this.state.total_ejecutado +this.state.budgetLinesAtlas[index].buddgetfinal;
+            this.state.total_disponible= this.state.total_disponible + this.state.budgetLinesAtlas[index].balance;
         }
 
         this.porcentaje_ejecutado = (this.state.total_ejecutado * 100 )/this.state.total_inicial;
@@ -197,9 +197,9 @@ export default class TableCost extends Component {
             date_start:this.state.startdate,
             date_end:this.state.enddate,
             account_id:this.state.account_id,
-            buddgetstart:this.state.buddgetstart,
-            buddgeupdate:this.state.buddgeupdate,
-            buddgetfinal:this.state.buddgetfinal,
+            budgetstart:this.state.buddgetstart,
+            budgeupdate:this.state.buddgeupdate,
+            budgetfinal:this.state.buddgetfinal,
             balance:this.state.balance,
             category_id:this.state.category_id
 
@@ -238,11 +238,206 @@ export default class TableCost extends Component {
                             <button type="button" className="btn btn-primary waves-effect waves-light f-right d-inline-block md-trigger" data-toggle="modal" data-target="#modal-13"><i className="icofont icofont-plus m-r-5" /> Crear Nuevo</button>
                         </div>
                         
-                        {this.state.budgetLinesCat.map(bLinesCat => 
-                           
-                            <RowBudget idCat={bLinesCat.category_id}  idProject={this.props.idProject} />
-                           
-                        )}
+                        <div className="card-block">
+                        <div className="table-responsive">
+                            <div className="table-content">
+                            <div className="dt-responsive table-responsive">
+                                <table id="e-product-list" className="table table-striped table-bordered nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Sub-Cuenta Atlas</th>
+                                        <th>Inicial</th>
+                                        <th>Ejecutado</th>
+                                        <th>Discponible</th>
+                                        <th>Estado</th>
+                                        <th>Rembolsar</th>
+                                        <th>Archivos</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.budgetLinesAtlas.map( budgetLinesAtlas =>   
+                                           
+                                            <tr key= {budgetLinesAtlas.id} >                             
+                                                {/* {this.suma(budgetLinesAtlas.buddgetstart, budgetLinesAtlas.buddgetfinal,budgetLinesAtlas.balance)}  */}
+                                                
+                                                <td className="pro-name">
+                                                    <label className="text-danger">{budgetLinesAtlas.code}</label>
+                                                </td>
+                                                <td className="pro-name">
+                                                    <h6>{budgetLinesAtlas.atlas_account.name}</h6>
+                                                 
+                                                </td>
+                                                <td>
+                                                    <label className="text-info"> {this.formatMoney( budgetLinesAtlas.budgetstart)}</label>
+                                                </td>
+                                                <td>
+                                                    <label className="text-danger"> {this.formatMoney(budgetLinesAtlas.budgetfinal)}</label>
+                                                </td>
+                                                <td>
+                                                    <label className="text-success"> {this.formatMoney(budgetLinesAtlas.balance)}</label>
+                                                </td>
+                                                                                        
+                                                {budgetLinesAtlas.status == 'Solicitado' 
+                                                     
+                                                ?<td><button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target={'#aprobar_'+budgetLinesAtlas.id}>Decidir</button> </td>
+                                                :<td><label >{budgetLinesAtlas.status}</label></td>
+                                                }
+
+                                                {budgetLinesAtlas.status == 'Aprobado' 
+                                                     
+                                                ?<td><button type="button" class="btn btn-warning waves-effect" data-toggle="modal" data-target={'#rembolsar_'+budgetLinesAtlas.id}>Rembolsar</button></td>
+                                                :<td align="center"><label >---</label></td>
+                                                }
+
+                                                <td><button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target={'#archivos_'+budgetLinesAtlas.id}>Ver/Subir</button> </td>
+                                                <td align="center" className="action-icon"> 
+                                                    <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
+                                                    <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>
+                                                </td>
+
+                         
+                                                <div class="modal fade" id={'aprobar_'+budgetLinesAtlas.id} tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">{budgetLinesAtlas.name}-{this.formatMoney(budgetLinesAtlas.budgetstart)} </h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>  
+                                                            <form >
+
+                                                                <div class="modal-body">                                                                
+                                                                    <select onChange={this.onchangeSelectAprobar} name="select" className="form-control mt-3">
+                                                                            <option value="0">Seleccion Opción</option>
+                                                                            <option value="1">SI APROBAR</option>
+                                                                            <option value="2">NO APROBAR</option>
+                                                                    </select>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light ">Guardar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id={'rembolsar_'+budgetLinesAtlas.id} tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Rembolsar {budgetLinesAtlas.name}-{this.formatMoney(budgetLinesAtlas.budgetstart)} </h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body" align="center">
+                                                                
+                                                                <div>
+                                                                    <label htmlFor="">Descripción del Rembolso</label>
+                                                                    <textarea className="form-control" style={{width:'100%'}} id="" cols="30" rows="10">
+
+                                                                    </textarea>
+                                                                </div>
+                                                                <input type="hidden" name={"input_rembolsar_"+budgetLinesAtlas.id}  value={budgetLinesAtlas.id}/>
+                                                                <div className="mt-3">
+                                                                    <button type="button" className="btn btn-primary waves-effect waves-light ">Reembolsar</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </tr>
+                                        )
+                                    }
+                                    
+                                    <tr>
+                                        <td align="center" className="pro-name">
+                                            <label className="text-danger">---</label>
+                                        </td>
+                                        <td className="pro-name">
+                                            <h6>Total de Prespuesto APROBADO</h6>
+                                            <span>Suma de los Totales</span>
+                                        </td>
+                                        <td align="center">   
+                                            <label >---</label>
+                                        </td>
+                                        <td>
+                                            <label className="text-info">{this.formatMoney(this.state.total_inicial)}</label>
+                                        </td>
+                                        <td>
+                                            <label className="text-danger">{this.formatMoney(this.state.total_ejecutado)}</label>
+                                        </td>
+                                        <td>
+                                            <label className="text-success">{this.formatMoney(this.state.total_disponible)}</label>
+                                        </td>
+                                        <td align="center">
+                                            <label >---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label  >---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label  >---</label>
+                                        </td>
+                                    
+                                        <td className="action-icon"> 
+                                          
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="center" className="pro-name">
+                                            <label className="text-danger">---</label>
+                                        </td>
+                                        <td className="pro-name">
+                                            <h6>Total de Prespuesto SOLICITADO</h6>
+                                            <span>Suma de los Totales</span>
+                                        </td>
+                                        <td align="center">  
+                                            <label >---</label>
+                                        </td>
+                                        <td>
+                                            {/* <label>{this.formatMoney(this.state.total_solicitado)}</label> */}
+                                        </td>
+                                        <td align="center">
+                                            <label className="text-info">---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label className="text-warning">---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label >---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label  >---</label>
+                                        </td>
+                                        <td align="center">
+                                            <label  >---</label>
+                                        </td>
+                                    
+                                        <td className="action-icon"> 
+                                          
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                                </table>
+                                
+                            </div>
+                            </div>
+                        </div>
+                    </div>
 
                     </div>
                     {/* Product list card end */}
@@ -333,7 +528,7 @@ export default class TableCost extends Component {
                                         <option value="#">Seleccione Sub-Cuenta Atlas</option>
                                         {
                                             this.state.sub_accounts_atlas.map(sub_account_atlas => 
-                                                <option value={sub_account_atlas.code}>{sub_account_atlas.name} </option>
+                                                <option value={sub_account_atlas.id}>{sub_account_atlas.name} </option>
                                             )
                                         }
                                     </select>
