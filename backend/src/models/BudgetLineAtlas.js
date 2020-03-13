@@ -4,6 +4,7 @@ import Person from './Person';
 import Account from './Account';
 import Project from './Project';
 import AtlasAccount from './AtlasAccount';
+import Archivo from './Archivo';
 
 //import connection object
 import { sequelize } from '../database/database';
@@ -151,7 +152,16 @@ BudgetLineAtlas.belongsTo(AtlasAccount,  {foreignKey: 'code_sub_atlas'});
 //BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas', targetKey: 'code'});
 //BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas'});
 //BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
-//BudgetLineAtlas.hasMany(File);
+/*BudgetLineAtlas.hasMany(Archivo);
+Country.hasMany(City, {foreignKey: 'countryCode', sourceKey: 'isoCode'});
+City.belongsTo(Country, {foreignKey: 'countryCode', targetKey: 'isoCode'});*/
+//BudgetLineAtlas.hasMany(Archivo, {foreignKey: 'budgetlineatlas_id', sourceKey: 'id'});
+
+
+//BudgetLineAtlas.hasMany(Archivo, {as: 'archivos', foreignKey : 'budgetlineatlas_id'})
+
+BudgetLineAtlas.hasMany(Archivo);
+//Archivo.belongsTo(Country, {foreignKey: 'countryCode', targetKey: 'isoCode'});
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 
 export default BudgetLineAtlas;

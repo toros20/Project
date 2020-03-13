@@ -1,9 +1,10 @@
-import BudgetLineAtlas from './BudgetLineAtlas'
 //para modelar datos 
 import Sequelize from 'sequelize';
 
 //import connection object
 import { sequelize } from '../database/database';
+
+import BudgetLineAtlas from './BudgetLineAtlas';
 
 const Archivo = sequelize.define('archivos',{
 
@@ -18,8 +19,8 @@ const Archivo = sequelize.define('archivos',{
         allowNull: false,
     },
     filedir:{
-        type: Sequelize.STRING
-       
+        type: Sequelize.STRING,
+        allowNull: false,
     },
     fase:{
         type:Sequelize.STRING
@@ -47,6 +48,8 @@ const Archivo = sequelize.define('archivos',{
 
 },{timestamps:true });
 
-Archivo.belongsTo(BudgetLineAtlas, {foreignKey: 'budgetlineatlas_id'});
+//Archivo.belongsTo(BudgetLineAtlas, {foreignKey: 'budgetlineatlas_id', targetKey: 'id'});
+//Archivo.belongsTo(BudgetLineAtlas, {foreignKey: 'budgetlineatlas_id'});
+//Archivo.belongsTo(BudgetLineAtlas);
 
 export default Archivo;

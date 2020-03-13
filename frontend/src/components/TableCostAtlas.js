@@ -337,7 +337,10 @@ export default class TableCost extends Component {
                                                 :<td align="center"><label >---</label></td>
                                                 }
 
-                                                <td><button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target={'#archivos_'+budgetLinesAtlas.id}>Ver/Subir</button> </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target={'#ver_archivos_'+budgetLinesAtlas.id}>Ver</button> 
+                                                    <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target={'#archivos_'+budgetLinesAtlas.id}>Subir</button>
+                                                </td>
                                                 <td align="center" className="action-icon"> 
                                                     <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
                                                     <a href="#!" className="text-muted" data-toggle="tooltip" data-placement="top" title data-original-title="Delete"><i className="icofont icofont-delete-alt" /></a>
@@ -372,6 +375,279 @@ export default class TableCost extends Component {
                                                     </div>
                                                 </div>
 
+                                                {/* VER Archivos */}
+                                                <div class="modal fade" id={'ver_archivos_'+budgetLinesAtlas.id} tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">  {budgetLinesAtlas.atlas_account.name} </h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>  
+                                                            
+                                                            <div class="modal-body">                                                                
+                                                              {/* Section: Magazine v.3 */}
+                                                                <section className="magazine-section my-5">
+                                                                {/* Section heading */}
+                                                                <h2 className="h1-responsive font-weight-bold text-center my-5">Sección de Archivos</h2>
+                                                                {/* Section description */}
+                                                                {/* <p className="text-center w-responsive mx-auto mb-5">Duis aute irure dolor in reprehenderit in voluptate velit
+                                                                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                                                                    qui officia deserunt mollit id laborum.</p> */}
+                                                                {/* Grid row */}
+                                                                <div className="row">
+                                                                    {/* Grid column */}
+                                                                    <div className="col-lg-4 col-md-12 mb-lg-0 mb-5">
+                                                                    {/* Featured news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Image */}
+                                                                        <div className="view overlay rounded z-depth-2 mb-4">
+                                                                            <img className="img-fluid" src={budgetLinesAtlas.archivo.filename} />
+                                                                        <a>
+                                                                            <div className="mask rgba-white-slight" />
+                                                                        </a>
+                                                                        </div>
+                                                                        {/* Grid row */}
+                                                                        <div className="row mb-3">
+                                                                        {/* Grid column */}
+                                                                        <div className="col-12">
+                                                                            {/* Badge */}
+                                                                            <a href="#!"><span className="badge pink"><i className="fas fa-camera pr-2" aria-hidden="true" />Adventure</span></a>
+                                                                        </div>
+                                                                        {/* Grid column */}
+                                                                        </div>
+                                                                        {/* Grid row */}
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a className="font-weight-bold">This is title of the news</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Featured news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>24 Food Swaps That Slash Calories.</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>How to Make a Beet Cocktail?</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>8 Sneaky Reasons You're Always Hungry.</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0">
+                                                                            <a>5 Pressure Cooker Recipes You Need to Try.</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    </div>
+                                                                    {/* Grid column */}
+                                                                    {/* Grid column */}
+                                                                    <div className="col-lg-4 col-md-6 mb-md-0 mb-5">
+                                                                    {/* Featured news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Image */}
+                                                                        <div className="view overlay rounded z-depth-2 mb-4">
+                                                                        <img className="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" alt="Sample image" />
+                                                                        <a>
+                                                                            <div className="mask rgba-white-slight" />
+                                                                        </a>
+                                                                        </div>
+                                                                        {/* Grid row */}
+                                                                        <div className="row mb-3">
+                                                                        {/* Grid column */}
+                                                                        <div className="col-12">
+                                                                            {/* Badge */}
+                                                                            <a href="#!"><span className="badge deep-orange"><i className="fas fa-plane pr-2" aria-hidden="true" />Travel</span></a>
+                                                                        </div>
+                                                                        {/* Grid column */}
+                                                                        </div>
+                                                                        {/* Grid row */}
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a className="font-weight-bold">This is title of the news</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Featured news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>Trends in the blogosphere for 2016.</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>Where you eat the best lunch in Warsaw?</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>What camera take for holidays?</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0">
+                                                                            <a>Why you should visit Lisbon?</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    </div>
+                                                                    {/* Grid column */}
+                                                                    {/* Grid column */}
+                                                                    <div className="col-lg-4 col-md-6 mb-0">
+                                                                    {/* Featured news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Image */}
+                                                                        <div className="view overlay rounded z-depth-2 mb-4">
+                                                                        <img className="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/52.jpg" alt="Sample image" />
+                                                                        <a>
+                                                                            <div className="mask rgba-white-slight" />
+                                                                        </a>
+                                                                        </div>
+                                                                        {/* Grid row */}
+                                                                        <div className="row mb-3">
+                                                                        {/* Grid column */}
+                                                                        <div className="col-12">
+                                                                            {/* Badge */}
+                                                                            <a href="#!"><span className="badge success-color"><i className="fas fa-plane pr-2" aria-hidden="true" />Nature</span></a>
+                                                                        </div>
+                                                                        {/* Grid column */}
+                                                                        </div>
+                                                                        {/* Grid row */}
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a className="font-weight-bold">This is title of the news</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Featured news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>How to recognize the footsteps of wild animals?</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>National Parks in Poland.</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news mb-3">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0 mb-3">
+                                                                            <a>Traveling without littering the planet.</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    {/* Small news */}
+                                                                    <div className="single-news">
+                                                                        {/* Title */}
+                                                                        <div className="d-flex justify-content-between">
+                                                                        <div className="col-11 text-truncate pl-0">
+                                                                            <a>How to protect rainforests?</a>
+                                                                        </div>
+                                                                        <a><i className="fas fa-angle-double-right" /></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    {/* Small news */}
+                                                                    </div>
+                                                                    {/* Grid column */}
+                                                                </div>
+                                                                {/* Grid row */}
+                                                                </section>
+                                                                {/* Section: Magazine v.3 */}
+
+
+
+
+
+
+                                                            </div>
+
+                                                        </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
+                                                                {/* <button type="button" onClick={ () =>this.onClickSubirArchivo(budgetLinesAtlas.id )} class="btn btn-primary waves-effect waves-light ">Guardar</button> */}
+                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light ">Guardar</button>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                {/* FINAL DE VER ARCHIVOS */}
+
+                                                 {/* SUBIR Archivos */}
                                                 <div class="modal fade" id={'archivos_'+budgetLinesAtlas.id} tabindex="-1" role="dialog">
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
@@ -388,6 +664,9 @@ export default class TableCost extends Component {
                                                                         <input onChange={this.onClickArchivo} type="file" name="archivo"></input>
                                                                     </div>
                                                                     <input value={budgetLinesAtlas.id} name="budget_id" type="hidden" className="form-control" />
+                                                                    <input value={this.props.idProject} name="project_id" type="hidden" className="form-control" />
+                                    
+                                                                    
                                                                     <div className="form-control mt-3">
                                                                         <input name="file_name" onChange={this.onClickNombreArchivo} type="text" className="form-control" placeholder="Ingrese Nombre de Archivo " />
                                                                     </div>
@@ -410,6 +689,8 @@ export default class TableCost extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {/* FINAL DE SUBIR ARCHIVOS */}
+
 
                                                 <div class="modal fade" id={'rembolsar_'+budgetLinesAtlas.id} tabindex="-1" role="dialog">
                                                     <div class="modal-dialog modal-lg" role="document">

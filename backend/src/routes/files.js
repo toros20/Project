@@ -2,6 +2,8 @@ import {Router} from 'express';
 import path from 'path';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
+import Archivo from '../models/Archivo'
+
 const router = Router();
 
 
@@ -47,9 +49,38 @@ var storage = multer.diskStorage({
 
 //ruta para la creacion de un nuevo archivo, asignado a un budgetLiine Atlas
 //router.post('/:id',multer.single(),createFile);
-router.post('/:id', upload.single('archivo'), function (req, res, next ){
+router.post('/:id', upload.single('archivo'),async function (req, res, next ){
     console.log(req.file);
-    res.send('SUBIDO');
+    const dir = 'public/files/'
+    try {
+        let newFile = await Archivo.create({
+            filename: req.file.filename,
+            filedir:  dir,
+            fase : req.body.fase,
+            budgetlineatlas_id:req.body.budget_id
+        },{
+            fields:['filename' , 'filedir' , 'fase' , 'budgetlineatlas_id']
+        });
+
+        if (newFile){
+            
+            res.redirect('http://localhost:3000/project/'+req.body.project_id);
+    
+        }else{
+            return res.json({
+                message:"No se Pudo Crear el Nuevo Archivo",
+                data:{}
+            });
+        }
+
+    } catch (error) {
+       console.log(error);
+        res.status(500).json({
+                message:"Error al crear nuevo File",
+                data:{}
+        });
+    }
+    
 });
 
 /* router.get('/categories_parents',categoriesparents);

@@ -3,6 +3,7 @@ import Category from '../models/Category';
 import Person from '../models/Person';
 import Project from '../models/Project';
 import Budget from '../models/Budget';
+import Archivo from '../models/Archivo';
 import sequelize from 'sequelize';
 import BudgetLineAtlas from '../models/BudgetLineAtlas';
 import AtlasAccount from '../models/AtlasAccount';
@@ -334,7 +335,7 @@ export async function budgetLinesAtlasbyProjectId(req,res){
     try {
        
         const  budgetLines_atlas =await  BudgetLineAtlas.findAll({
-            include: [ Person, AtlasAccount ],
+            include: [ Person, AtlasAccount, Archivo ],
             order: [['id', 'ASC']],
             where:{
                 project_id:id
@@ -345,7 +346,7 @@ export async function budgetLinesAtlasbyProjectId(req,res){
         })
       
     } catch (error) {
-        console.log("ERROR AL QUERE LISTAR Budgetline-Atlas:"+error);
+        console.log("ERROR AL QUERE LISTAR las Budgetline-Atlas:"+error);
     }
    
 } 
