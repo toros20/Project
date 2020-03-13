@@ -7,12 +7,6 @@ exports["default"] = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
-var _Person = _interopRequireDefault(require("./Person"));
-
-var _Project = _interopRequireDefault(require("./Project"));
-
-var _Rol = _interopRequireDefault(require("./Rol"));
-
 var _File = _interopRequireDefault(require("./File"));
 
 var _database = require("../database/database");
@@ -34,31 +28,7 @@ var Team = _database.sequelize.define('teams', {
   description: {
     type: _sequelize["default"].TEXT
   },
-  person_id: {
-    type: _sequelize["default"].INTEGER,
-    allowNull: false,
-    references: {
-      model: _Person["default"],
-      key: 'id'
-    }
-  },
-  project_id: {
-    type: _sequelize["default"].INTEGER,
-    allowNull: false,
-    references: {
-      model: _Project["default"],
-      key: 'id'
-    }
-  },
-  rol_id: {
-    type: _sequelize["default"].INTEGER,
-    allowNull: false,
-    references: {
-      model: _Rol["default"],
-      key: 'id'
-    }
-  },
-  file_id: {
+  files_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {

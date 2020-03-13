@@ -13,37 +13,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //para modelar datos 
 //import connection object
-var Person = _database.sequelize.define('persons', {
+var Supplier = _database.sequelize.define('suppliers', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  fullname: {
+  company: {
     type: _sequelize["default"].STRING,
-    allowNull: false
+    allowNull: true
   },
-  jobtitle: {
-    type: _sequelize["default"].STRING
-  },
-  gender: {
+  contact_name: {
     type: _sequelize["default"].STRING,
     allowNull: false
   },
   address: {
     type: _sequelize["default"].TEXT
   },
+  email: {
+    type: _sequelize["default"].STRING,
+    allowNull: true
+  },
   phone1: {
-    type: _sequelize["default"].STRING
+    type: _sequelize["default"].STRING,
+    allowNull: true
   },
   phone2: {
-    type: _sequelize["default"].STRING
-  },
-  email: {
-    type: _sequelize["default"].STRING
-  },
-  filename: {
-    type: _sequelize["default"].TEXT
+    type: _sequelize["default"].STRING,
+    allowNull: true
   },
   createdAt: {
     type: _sequelize["default"].DATE,
@@ -57,5 +54,5 @@ var Person = _database.sequelize.define('persons', {
   timestamps: true
 });
 
-var _default = Person;
+var _default = Supplier;
 exports["default"] = _default;

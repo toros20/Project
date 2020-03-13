@@ -11,13 +11,17 @@ var _Person = _interopRequireDefault(require("./Person"));
 
 var _Account = _interopRequireDefault(require("./Account"));
 
+var _Project = _interopRequireDefault(require("./Project"));
+
+var _Category = _interopRequireDefault(require("./Category"));
+
 var _database = require("../database/database");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 //para modelar datos 
 //import connection object
-var Budget = _database.sequelize.define('budgets', {
+var BudgetLine = _database.sequelize.define('budgetlines', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
@@ -33,11 +37,19 @@ var Budget = _database.sequelize.define('budgets', {
   description: {
     type: _sequelize["default"].TEXT
   },
-  excercise_start: {
+  date_start: {
     type: _sequelize["default"].DATEONLY
   },
-  excercise_end: {
+  date_end: {
     type: _sequelize["default"].DATEONLY
+  },
+  category_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: true,
+    references: {
+      model: _Category["default"],
+      key: 'id'
+    }
   },
   account_id: {
     type: _sequelize["default"].INTEGER,
@@ -47,7 +59,23 @@ var Budget = _database.sequelize.define('budgets', {
       key: 'id'
     }
   },
-  person_id: {
+  project_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Project["default"],
+      key: 'id'
+    }
+  },
+  user_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Person["default"],
+      key: 'id'
+    }
+  },
+  supplier_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
@@ -86,7 +114,7 @@ var Budget = _database.sequelize.define('budgets', {
   },
   approvalby_id: {
     type: _sequelize["default"].INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: _Person["default"],
       key: 'id'
@@ -105,12 +133,19 @@ var Budget = _database.sequelize.define('budgets', {
   }
 }, {
   timestamps: true
-}); //Budget.hasMany(Project);
+});
+
+BudgetLine.belongsTo(_Project["default"], {
+  foreignKey: 'project_id'
+});
+BudgetLine.belongsTo(_Category["default"], {
+  foreignKey: 'category_id'
+});
+BudgetLine.belongsTo(_Person["default"], {
+  foreignKey: 'supplier_id'
+}); //BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
+//Budget.hasMany(Project);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 
-
-Budget.belongsTo(_Account["default"], {
-  foreignKey: 'account_id'
-});
-var _default = Budget;
+var _default = BudgetLine;
 exports["default"] = _default;

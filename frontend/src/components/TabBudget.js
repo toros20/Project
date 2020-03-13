@@ -48,8 +48,8 @@ export default class TabBudget extends Component {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><button  style={{width: '100%'}} className="btn btn-lg btn-primary  waves-effect waves-light" type="button"  >{this.formatMoney( this.props.budgetstart)}</button></td>
-                                                    <td><button  style={{width: '100%'}}  className="btn btn-lg btn-danger  waves-effect waves-light" type="button"  >{this.formatMoney(this.props.buddgetupdate)} </button></td>
+                                                    <td><button  style={{width: '100%'}} className="btn btn-lg btn-primary  waves-effect waves-light" type="button"  >{this.formatMoney(this.props.budgetstart)}</button></td>
+                                                    <td><button  style={{width: '100%'}}  className="btn btn-lg btn-danger  waves-effect waves-light" type="button"  >{this.formatMoney(this.props.budgetupdate)} </button></td>
                                                    
                                                     <td><button  style={{width: '100%'}} className="btn btn-lg btn-warning  waves-effect waves-light" type="button"  >{this.formatMoney(this.props.returns)}</button></td>
                                                     <td><button  style={{width: '100%'}} className="btn btn-lg btn-success  waves-effect waves-light" type="button"  >{this.formatMoney(this.props.balance)} </button></td>

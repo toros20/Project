@@ -13,37 +13,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //para modelar datos 
 //import connection object
-var Person = _database.sequelize.define('persons', {
+var AtlasAccount = _database.sequelize.define('atlas_accounts', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  fullname: {
+  name: {
+    type: _sequelize["default"].TEXT,
+    allowNull: false
+  },
+  code: {
     type: _sequelize["default"].STRING,
     allowNull: false
   },
-  jobtitle: {
-    type: _sequelize["default"].STRING
+  details: {
+    type: _sequelize["default"].TEXT
   },
-  gender: {
+  code_atlas: {
     type: _sequelize["default"].STRING,
     allowNull: false
-  },
-  address: {
-    type: _sequelize["default"].TEXT
-  },
-  phone1: {
-    type: _sequelize["default"].STRING
-  },
-  phone2: {
-    type: _sequelize["default"].STRING
-  },
-  email: {
-    type: _sequelize["default"].STRING
-  },
-  filename: {
-    type: _sequelize["default"].TEXT
   },
   createdAt: {
     type: _sequelize["default"].DATE,
@@ -57,5 +46,5 @@ var Person = _database.sequelize.define('persons', {
   timestamps: true
 });
 
-var _default = Person;
+var _default = AtlasAccount;
 exports["default"] = _default;

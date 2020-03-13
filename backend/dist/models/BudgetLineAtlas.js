@@ -11,32 +11,62 @@ var _Person = _interopRequireDefault(require("./Person"));
 
 var _Account = _interopRequireDefault(require("./Account"));
 
+var _Project = _interopRequireDefault(require("./Project"));
+
+var _AtlasAccount = _interopRequireDefault(require("./AtlasAccount"));
+
 var _database = require("../database/database");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 //para modelar datos 
 //import connection object
-var Budget = _database.sequelize.define('budgets', {
+var BudgetLineAtlas = _database.sequelize.define('budgetlines_atlas', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  code: {
-    type: _sequelize["default"].STRING
-  },
-  name: {
+  code_resultado: {
     type: _sequelize["default"].STRING,
     allowNull: false
   },
-  description: {
+  code_producto: {
+    type: _sequelize["default"].STRING,
+    allowNull: false
+  },
+  code_activity: {
+    type: _sequelize["default"].STRING,
+    allowNull: false
+  },
+  code_atlas: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _AtlasAccount["default"],
+      key: 'id'
+    }
+  },
+  code_sub_atlas: {
+    /*type: Sequelize.STRING, 
+    allowNull: false*/
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _AtlasAccount["default"],
+      key: 'id'
+    }
+  },
+  code: {
+    type: _sequelize["default"].STRING
+  },
+  details: {
     type: _sequelize["default"].TEXT
   },
-  excercise_start: {
+  date_start: {
     type: _sequelize["default"].DATEONLY
   },
-  excercise_end: {
+  date_end: {
     type: _sequelize["default"].DATEONLY
   },
   account_id: {
@@ -47,7 +77,15 @@ var Budget = _database.sequelize.define('budgets', {
       key: 'id'
     }
   },
-  person_id: {
+  project_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Project["default"],
+      key: 'id'
+    }
+  },
+  user_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
     references: {
@@ -55,15 +93,23 @@ var Budget = _database.sequelize.define('budgets', {
       key: 'id'
     }
   },
-  buddgetstart: {
+  supplier_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Person["default"],
+      key: 'id'
+    }
+  },
+  budgetstart: {
     type: _sequelize["default"].DOUBLE,
     allowNull: false
   },
-  buddgeupdate: {
+  budgeupdate: {
     type: _sequelize["default"].DOUBLE,
     allowNull: false
   },
-  buddgetfinal: {
+  budgetfinal: {
     type: _sequelize["default"].DOUBLE,
     allowNull: false
   },
@@ -86,7 +132,7 @@ var Budget = _database.sequelize.define('budgets', {
   },
   approvalby_id: {
     type: _sequelize["default"].INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: _Person["default"],
       key: 'id'
@@ -105,12 +151,22 @@ var Budget = _database.sequelize.define('budgets', {
   }
 }, {
   timestamps: true
-}); //Budget.hasMany(Project);
+});
+
+BudgetLineAtlas.belongsTo(_Project["default"], {
+  foreignKey: 'project_id'
+});
+BudgetLineAtlas.belongsTo(_Person["default"], {
+  foreignKey: 'supplier_id'
+}); //BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas'});
+
+BudgetLineAtlas.belongsTo(_AtlasAccount["default"], {
+  foreignKey: 'code_sub_atlas'
+}); //BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas', targetKey: 'code'});
+//BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas'});
+//BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
+//Budget.hasMany(Project);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 
-
-Budget.belongsTo(_Account["default"], {
-  foreignKey: 'account_id'
-});
-var _default = Budget;
+var _default = BudgetLineAtlas;
 exports["default"] = _default;

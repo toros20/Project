@@ -27,14 +27,14 @@ const BudgetLineAtlas = sequelize.define('budgetlines_atlas',{
         type: Sequelize.STRING, 
         allowNull: false
     },
-    code_atlas:{
+    /*code_atlas:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: AtlasAccount,
           key: 'id',
          }
-    },
+    },*/
     code_sub_atlas:{
         /*type: Sequelize.STRING, 
         allowNull: false*/
@@ -151,7 +151,7 @@ BudgetLineAtlas.belongsTo(AtlasAccount,  {foreignKey: 'code_sub_atlas'});
 //BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas', targetKey: 'code'});
 //BudgetLineAtlas.belongsTo(AtlasAccount, {foreignKey: 'code_atlas'});
 //BudgetLine.belongsTo(Person, {foreignKey: 'approvalby_id'});
-//Budget.hasMany(Project);
+//BudgetLineAtlas.hasMany(File);
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 
 export default BudgetLineAtlas;

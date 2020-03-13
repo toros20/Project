@@ -9,9 +9,11 @@ var _sequelize = _interopRequireDefault(require("sequelize"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+require('dotenv').config();
+
 //create cadena de conexion
-var sequelize = new _sequelize["default"]('budgetsIHCAFE', 'userIHCAFE', 'Sistemas20!', {
-  host: 'localhost',
+var sequelize = new _sequelize["default"](process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: process.env.DB_URI,
   dialect: 'postgres',
   pool: {
     max: 5,

@@ -26,8 +26,6 @@ router.post('/aprobar/:id/:status',AprobarBudgetLinesbyId);
 router.post('/aprobar_atlas/:id/:status',AprobarBudgetLinesAtlasbyId);
 
 
-
-
 // ruta /api/budgetlines/project/:id -> para buscar los renglones de cada projecto
 router.post('/atlas/project/:id',budgetLinesAtlasbyProjectId);
 

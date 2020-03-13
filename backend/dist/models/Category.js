@@ -23,11 +23,15 @@ var Category = _database.sequelize.define('categories', {
     type: _sequelize["default"].STRING,
     allowNull: false
   },
+  code: {
+    type: _sequelize["default"].STRING,
+    allowNull: false
+  },
   description: {
     type: _sequelize["default"].TEXT
   },
-  typecategory: {
-    type: _sequelize["default"].STRING,
+  parent_category: {
+    type: _sequelize["default"].INTEGER,
     allowNull: false
   },
   createdAt: {

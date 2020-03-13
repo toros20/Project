@@ -42,15 +42,16 @@ export default class listBudgets extends Component {
                                     </div>
                                  </div>
                                  
-                                {
+                                {    
                                     this.state.budgets.map( budget =>   
+                                     
                                       <TabBudget 
                                         nombre={budget.name} 
                                         id={budget.id} 
                                         description={budget.description} 
                                         account={budget.account.name} 
                                         budgetstart={budget.buddgetstart} 
-                                        buddgetupdate={budget.buddgeupdate} 
+                                        budgetupdate={budget.buddgeupdate} 
                                         balance={budget.balance} 
                                         returns={budget.returns} 
                                        

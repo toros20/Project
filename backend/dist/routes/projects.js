@@ -14,6 +14,7 @@ var router = (0, _express.Router)();
 router.post('/', _projectsController.createProjects);
 router.get('/', _projectsController.listProjects);
 router.get('/:id', _projectsController.findProject);
+router.post('/findProjectsByBudgetId/:id', _projectsController.findProjectsByBudgetId);
 router["delete"]('/:id', _projectsController.deleteProject);
 router.put('/:id', _projectsController.updateProject);
 var _default = router;

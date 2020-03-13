@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
+var _BudgetLineAtlas = _interopRequireDefault(require("./BudgetLineAtlas"));
+
 var _database = require("../database/database");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -26,8 +28,16 @@ var File = _database.sequelize.define('files', {
   filedir: {
     type: _sequelize["default"].STRING
   },
-  type: {
+  fase: {
     type: _sequelize["default"].STRING
+  },
+  budgetlineatlas_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: true,
+    references: {
+      model: _BudgetLineAtlas["default"],
+      key: 'id'
+    }
   },
   createdAt: {
     type: _sequelize["default"].DATE,

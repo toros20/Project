@@ -61,7 +61,11 @@ export default class TableCost extends Component {
             supplier:0,
             details:'',
 
-            aprobar:0
+            aprobar:0,
+
+            archivo:[],
+            nombre_archivo:'',
+            fase_archivo:''
 
          
         }
@@ -195,10 +199,29 @@ export default class TableCost extends Component {
         //e.preventDefault();
         if ( await axios.post('http://localhost:4000/api/budgetlines/aprobar_atlas/'+id+'/'+this.state.aprobar)){
             window.location.href = 'http://localhost:3000/project/'+this.props.idProject
-        }
-        
+        } 
+    }
+
+    onClickArchivo = async (e) =>{
+        this.setState({archivo: e.target.value });
+    }
+    onClickNombreArchivo = async (e) =>{
+        this.setState({nombre_archivo: e.target.value });
+    }
+    onClickFaseArchivo = async (e) =>{
+        this.setState({fase_archivo: e.target.value });
+    }
+    onClickSubirArchivo = async (id) =>{
+         await axios.post('http://localhost:4000/api/files/'+id,{
+            nombre_archivo:this.state.nombre_archivo,
+            fase_archivo:this.state.fase_archivo,
+            file:this.state.archivo,
+         })
+
+        // window.location.href = 'http://localhost:3000/project/'+this.props.idProject
         
     }
+
         //codigo para crear un nuevo renglon presupuestario
     onSubmit  = async e =>{
         e.preventDefault();
@@ -358,28 +381,30 @@ export default class TableCost extends Component {
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>  
-                                                            <form method="post" enctype="multipart/form-data">
+                                                            <form action = {'http://localhost:4000/api/files/'+budgetLinesAtlas.id} method="post" enctype="multipart/form-data">
 
                                                                 <div class="modal-body">                                                                
-                                                                    <div >
-                                                                        <input type="file" name="files"></input>
+                                                                    <div className="form-control mt-3">
+                                                                        <input onChange={this.onClickArchivo} type="file" name="archivo"></input>
+                                                                    </div>
+                                                                    <input value={budgetLinesAtlas.id} name="budget_id" type="hidden" className="form-control" />
+                                                                    <div className="form-control mt-3">
+                                                                        <input name="file_name" onChange={this.onClickNombreArchivo} type="text" className="form-control" placeholder="Ingrese Nombre de Archivo " />
                                                                     </div>
                                                                     <div >
-                                                                        <input name="Nombre de Archivo" onChange={this.onChanceArchivo} type="text" className="form-control" placeholder="Ingrese El valor Solicitado : 0,000.00 " />
-                                                                    </div>
-                                                                    <div >
-                                                                    <select name="fase" className="form-control mt-3">
-                                                                            <option value="0">Seleccion Opción</option>
-                                                                            <option value="1">Fase 1</option>
-                                                                            <option value="2">Fase 2</option>
-                                                                            <option value="3">Fase 3</option>
+                                                                    <select onChange={this.onClickFaseArchivo} name="fase" className="form-control mt-3">
+                                                                            <option value="0">Seleccion Fase</option>
+                                                                            <option value="Fase 1">Fase 1</option>
+                                                                            <option value="Fase 2">Fase 2</option>
+                                                                            <option value="Fase 3">Fase 3</option>
                                                                     </select>
                                                                     </div>
-                                                                    
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Cerrar</button>
-                                                                    <button type="button" onClick={ () =>this.onClickAprobar(budgetLinesAtlas.id )} class="btn btn-primary waves-effect waves-light ">Guardar</button>
+                                                                    {/* <button type="button" onClick={ () =>this.onClickSubirArchivo(budgetLinesAtlas.id )} class="btn btn-primary waves-effect waves-light ">Guardar</button> */}
+                                                                     <button type="submit" class="btn btn-primary waves-effect waves-light ">Guardar</button>
                                                                 </div>
                                                             </form>
                                                         </div>

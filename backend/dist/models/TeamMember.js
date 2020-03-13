@@ -7,9 +7,15 @@ exports["default"] = void 0;
 
 var _sequelize = _interopRequireDefault(require("sequelize"));
 
-var _Category = _interopRequireDefault(require("./Category"));
-
 var _Person = _interopRequireDefault(require("./Person"));
+
+var _Project = _interopRequireDefault(require("./Project"));
+
+var _Rol = _interopRequireDefault(require("./Rol"));
+
+var _Team = _interopRequireDefault(require("./Team"));
+
+var _File = _interopRequireDefault(require("./File"));
 
 var _database = require("../database/database");
 
@@ -17,28 +23,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //para modelar datos 
 //import connection object
-var Account = _database.sequelize.define('accounts', {
+var Teams = _database.sequelize.define('teams', {
   id: {
     type: _sequelize["default"].INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  name: {
-    type: _sequelize["default"].STRING,
-    allowNull: false
+  team_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Team["default"],
+      key: 'id'
+    }
   },
-  description: {
-    type: _sequelize["default"].TEXT
-  },
-
-  /*  category_id: {
-       type: Sequelize.INTEGER,
-       allowNull: false,
-       references: {
-         model: Category,
-         key: 'id',
-        }
-   }, */
   person_id: {
     type: _sequelize["default"].INTEGER,
     allowNull: false,
@@ -47,17 +45,13 @@ var Account = _database.sequelize.define('accounts', {
       key: 'id'
     }
   },
-  initialbalance: {
-    type: _sequelize["default"].DOUBLE,
-    allowNull: false
-  },
-  actualbalance: {
-    type: _sequelize["default"].DOUBLE,
-    allowNull: false
-  },
-  coin: {
-    type: _sequelize["default"].STRING,
-    allowNull: false
+  rol_id: {
+    type: _sequelize["default"].INTEGER,
+    allowNull: false,
+    references: {
+      model: _Rol["default"],
+      key: 'id'
+    }
   },
   createdAt: {
     type: _sequelize["default"].DATE,
@@ -71,5 +65,5 @@ var Account = _database.sequelize.define('accounts', {
   timestamps: true
 });
 
-var _default = Account;
+var _default = Teams;
 exports["default"] = _default;

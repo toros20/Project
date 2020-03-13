@@ -106,6 +106,9 @@ var Project = _database.sequelize.define('projects', {
   timestamps: true
 });
 
+Project.belongsTo(_Budget["default"], {
+  foreignKey: 'budget_id'
+});
 Project.hasMany(_Task["default"], {
   foreignKey: 'id'
 });
