@@ -7,7 +7,7 @@ import Archivo from '../models/Archivo'
 const router = Router();
 
 
-import {createFile} from '../controllers/filesController';
+import {FileByBudgetId} from '../controllers/filesController';
 
 /*const storage=multer.diskStorage({
     
@@ -48,18 +48,19 @@ var storage = multer.diskStorage({
 //const upload = multer ({dest: path.join(__dirname, '../public/files')});
 
 //ruta para la creacion de un nuevo archivo, asignado a un budgetLiine Atlas
-//router.post('/:id',multer.single(),createFile);
+router.post('/filesbybudgetid/:id',FileByBudgetId);
 router.post('/:id', upload.single('archivo'),async function (req, res, next ){
     console.log(req.file);
-    const dir = 'public/files/'
+    const dir = '/files/'
     try {
         let newFile = await Archivo.create({
             filename: req.file.filename,
             filedir:  dir,
+            description: req.body.file_name,
             fase : req.body.fase,
             budgetlineatlas_id:req.body.budget_id
         },{
-            fields:['filename' , 'filedir' , 'fase' , 'budgetlineatlas_id']
+            fields:['filename' , 'filedir' ,'description', 'fase' , 'budgetlineatlas_id']
         });
 
         if (newFile){

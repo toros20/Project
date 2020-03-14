@@ -159,8 +159,8 @@ City.belongsTo(Country, {foreignKey: 'countryCode', targetKey: 'isoCode'});*/
 
 
 //BudgetLineAtlas.hasMany(Archivo, {as: 'archivos', foreignKey : 'budgetlineatlas_id'})
-
-BudgetLineAtlas.hasMany(Archivo);
+//BudgetLineAtlas.hasMany(Archivo, {as: 'archivos', foreignKey: 'budgetlineatlas_id'});
+//BudgetLineAtlas.hasMany(Archivo);
 //Archivo.belongsTo(Country, {foreignKey: 'countryCode', targetKey: 'isoCode'});
 //Project.belongsTo(Budget, {foreignKey: 'budget_id'});
 

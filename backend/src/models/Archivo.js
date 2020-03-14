@@ -18,6 +18,10 @@ const Archivo = sequelize.define('archivos',{
         type: Sequelize.STRING, 
         allowNull: false,
     },
+    description:{
+        type: Sequelize.STRING, 
+        allowNull: false,
+    },
     filedir:{
         type: Sequelize.STRING,
         allowNull: false,
